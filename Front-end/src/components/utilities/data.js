@@ -1,0 +1,128 @@
+import Bonanaza from "../../assets/images/topBrands/bonanaza.jpg";
+import Chenone from "../../assets/images/topBrands/chenone.jpg";
+import Engine from "../../assets/images/topBrands/engine.jpg";
+import Levis from "../../assets/images/topBrands/levis.jpg";
+import Outfitters from "../../assets/images/topBrands/outfitters.jpg";
+
+export const appData = [
+  {
+    id: "80113",
+    name: "SHIRT",
+    pictures: [
+      Bonanaza,
+    ],
+    stock: "342",
+    price: "2290",
+    discount: "74",
+    salePrice: "2590",
+    description: "",
+    tags: ["men", "shirts"],
+    rating: "2",
+    category: "men",
+    colors: ["gray", "green", "red"],
+    size: ["100 CM", "90 CM", "95 CM"],
+    buyUrl:
+      "https://outfitters.com.pk/collections/men-shirts/products/mtc101018-blu-wht",
+    gender: "men",
+    brand: "shirts",
+    date: { $date: { $numberLong: "1583164903192" } },
+    mainBrand: "bonanaza",
+  },
+  {
+    _id: { $oid: "5e5ce797c0c4d54b98010cf5" },
+    id: "80122",
+    name: "SHIRT",
+    pictures: [
+      Chenone,
+    ],
+    stock: "351",
+    price: "2290",
+    discount: "59",
+    salePrice: "2290",
+    description: "",
+    tags: ["men", "shirts"],
+    rating: "2",
+    category: "men",
+    colors: ["green", "red", "pink"],
+    size: ["100 CM", "90 CM", "95 CM"],
+    buyUrl:
+      "https://outfitters.com.pk/collections/men-shirts/products/mtf101008-wht-yel",
+    gender: "men",
+    brand: "shirts",
+    date: { $date: { $numberLong: "1583164903888" } },
+    mainBrand: "chenone",
+  },
+  {
+    _id: { $oid: "5e5ce797c0c4d54b98010cf6" },
+    id: "22507",
+    name: "SHIRT",
+    pictures: [
+      Engine,
+    ],
+    stock: "325",
+    price: "2490",
+    discount: "99",
+    salePrice: "2490",
+    description: "",
+    tags: ["men", "shirts"],
+    rating: "0",
+    category: "men",
+    colors: ["black", "black", "black"],
+    size: ["XS", "S", "2T"],
+    buyUrl:
+      "https://outfitters.com.pk/collections/men-shirts/products/mtf101022-blk",
+    gender: "men",
+    brand: "shirts",
+    date: { $date: { $numberLong: "1583164903898" } },
+    mainBrand: "engine",
+  },
+
+  {
+    _id: { $oid: "5e5ce797c0c4d54b98010cf9" },
+    id: "69186",
+    name: "SHIRT",
+    pictures: [
+      Levis,
+    ],
+    stock: "132",
+    price: "2490",
+    discount: "13",
+    salePrice: "2790",
+    description: "",
+    tags: ["men", "shirts"],
+    rating: "1",
+    category: "men",
+    colors: ["white", "black", "blue"],
+    size: ["100 CM", "90 CM", "95 CM"],
+    buyUrl:
+      "https://outfitters.com.pk/collections/men-shirts/products/mtc101009-grn-blu",
+    gender: "men",
+    brand: "shirts",
+    date: { $date: { $numberLong: "1583164903925" } },
+    mainBrand: "levis",
+  },
+  {
+    _id: { $oid: "5e5ce797c0c4d54b98010cfa" },
+    id: "43489",
+    name: "SHIRT",
+    pictures: [
+      Outfitters,
+    ],
+    stock: "85",
+    price: "2490",
+    discount: "48",
+    salePrice: "2790",
+    description: "",
+    tags: ["men", "shirts"],
+    rating: "3",
+    category: "men",
+    colors: ["green", "white", "pink"],
+    size: ["XS", "S", "2T"],
+    buyUrl:
+      "https://outfitters.com.pk/collections/men-shirts/products/mtc101009-blu-grn",
+    gender: "men",
+    brand: "shirts",
+    date: { $date: { $numberLong: "1583164903932" } },
+    mainBrand: "outfitters",
+  },
+];

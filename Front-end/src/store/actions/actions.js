@@ -1,0 +1,64 @@
+import * as Constants from "../constants/constants";
+import { products } from "../../components/utilities/constants";
+import { appData } from "../../components/utilities/data";
+import axios from "axios";
+
+export const getProductList = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: Constants.GET_PRODUCT_LIST_REQUEST,
+    });
+
+    try {
+      const data = await axios.get(
+        "https://my-json-server.typicode.com/benirvingplt/products/products"
+      );
+      dispatch({
+        type: Constants.GET_PRODUCT_LIST_SUCCESS,
+        payload: data.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: Constants.GET_PRODUCT_LIST_FAILURE,
+        payload: err,
+      });
+    }
+  };
+};
+
+export const addQuantity = (id, price, index) => {
+  return {
+    type: Constants.ADD_PRODUCT,
+    id,
+    price,
+    index,
+  };
+};
+
+export const subtractQuantity = (id, price, index) => {
+  return {
+    type: Constants.SUBTRACT_PRODUCT,
+    id,
+    price,
+    index,
+  };
+};
+
+export const removeToCart = (id, price, index) => {
+  return {
+    type: Constants.REMOVE_PRODUCT,
+    id,
+    price,
+    index,
+  };
+};
+
+export const receiveProducts = () => {
+  return async (dispatch) => {
+    let data = await axios.get("http://localhost:5001/api/v1/products/")
+    dispatch({
+      type: "ACTUAL_PRODUCTS",
+      products: data.data.data,
+    });
+  };
+};

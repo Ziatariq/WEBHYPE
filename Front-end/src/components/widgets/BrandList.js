@@ -126,7 +126,7 @@ class BrandList extends Component {
     }
 
     return (
-      <div key={1} className={this.props.layoutstyle}>
+      <div key={1}>
         <ToastContainer autoClose={1000} draggable={false} />
         <div className="product product_tag-black product-hover-style-default product-hover-button-style-light product_title_type-single_line product_icon_type-line-icon">
           <div className="product-inner element-hovered">

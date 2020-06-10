@@ -55,10 +55,57 @@ export const removeToCart = (id, price, index) => {
 
 export const receiveProducts = () => {
   return async (dispatch) => {
-    let data = await axios.get("http://localhost:5001/api/v1/products/")
+    let data = await axios.get("http://localhost:5001/api/v1/products/");
     dispatch({
       type: "ACTUAL_PRODUCTS",
       products: data.data.data,
+    });
+  };
+};
+
+export const getBrandProductList = (brandOne, brandTwo, brandThree) => {
+  return async (dispatch) => {
+    dispatch({
+      type: Constants.GET_BRAND_PRODUCT_LIST_REQUEST,
+    });
+
+    try {
+      const brandOneData = await axios.get(
+        `http://localhost:5001/api/v1/products/brands?mainBrand=${brandOne}`
+      );
+      const brandTwoData = await axios.get(
+        `http://localhost:5001/api/v1/products/brands?mainBrand=${brandTwo}`
+      );
+      const brandThreeData = await axios.get(
+        `http://localhost:5001/api/v1/products/brands?mainBrand=${brandThree}`
+      );
+
+      dispatch({
+        type: Constants.GET_BRAND_PRODUCT_LIST_SUCCESS,
+        payload: {
+          brandOneData: brandOneData.data.data,
+          brandTwoData: brandTwoData.data.data,
+          brandThreeData: brandThreeData.data.data,
+        },
+      });
+    } catch (err) {
+      dispatch({
+        type: Constants.GET_BRAND_PRODUCT_LIST_FAILURE,
+        payload: err,
+      });
+    }
+  };
+};
+
+export const selectedBrands = ({ brandOne, brandTwo, brandThree }) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "SELECTED_BRANDS_LIST",
+      payload: {
+        brandOne,
+        brandTwo,
+        brandThree,
+      },
     });
   };
 };

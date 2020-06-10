@@ -9,19 +9,19 @@ const inititalState = {
 
 export default (state = inititalState, action) => {
   switch (action.type) {
-    case Constants.GET_PRODUCT_LIST_REQUEST:
+    case Constants.GET_BRAND_PRODUCT_LIST_REQUEST:
       return Object.assign({}, state, {
         productFetched: false,
         productFetching: true,
         productError: null
       });
-    case Constants.GET_PRODUCT_LIST_SUCCESS:
+    case Constants.GET_BRAND_PRODUCT_LIST_SUCCESS:
       return Object.assign({}, state, {
         productFetched: true,
         productFetching: false,
         productMessage: "device reading status changed successfully"
       });
-    case Constants.GET_PRODUCT_LIST_FAILURE:
+    case Constants.GET_BRAND_PRODUCT_LIST_FAILURE:
       return Object.assign({}, state, {
         productMessage: "loading device failed",
         productFetching: false,

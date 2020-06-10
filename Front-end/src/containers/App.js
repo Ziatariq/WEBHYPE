@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Route, Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
-
 import Layout from "./layout/Layout";
 import HomePage from "./homePage/HomePage";
 import "../App.css";

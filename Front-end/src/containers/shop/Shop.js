@@ -118,6 +118,6 @@ class Shop extends Component {
   }
 }
 const mapDispatchToProps = (state) => ({
-  products: getFilterProductsdata(state.data, state.filters),
+  products: getFilterProductsdata(state.data.products, state.filters),
 });
 export default connect(mapDispatchToProps, {})(Shop);

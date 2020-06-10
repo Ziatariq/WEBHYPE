@@ -11801,6 +11801,7 @@ footer.site-footer.footer-style-2 .footer-widgets-wrapper {
 .products .product-thumbnail {
   position: relative;
   overflow: hidden;
+  height: 444px;
 }
 
 .products a {
@@ -19281,4 +19282,13 @@ button:focus {
 .navbar-nav .dropdown-item.active, .navbar-nav .dropdown-item:active {
   color: #d65e47;
   background-color: transparent;
+}
+
+
+.ant-slider-track {
+  background-color: #d65e47 !important;
+}
+
+.ant-slider-handle, .ant-slider-dot, .filterbg .ant-slider-step{
+  border-color: #d65e47 !important;
 }

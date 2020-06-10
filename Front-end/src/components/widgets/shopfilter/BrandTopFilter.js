@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { Col, Form, Row, Button } from "reactstrap";
 import {
   ratingValue,
   sortValue,
   searchValue,
 } from "../../../store/actions/filter";
+import { getBrandProductList } from "../../../store/actions/actions";
 import { products } from "../../utilities/constants";
 import { getFilterProductsdata, uniqueBrand } from "../../../services";
 
 class TopFilter extends Component {
   state = {
     SearchValue: "",
+    brandOne: "",
+    brandTwo: "",
+    brandThree: "",
   };
 
   componentDidMount() {
@@ -23,27 +26,31 @@ class TopFilter extends Component {
     this.props.searchValue("");
   }
 
-  SearchTextchange(SearchText) {
+  onChangeHandler = (event) => {
     this.setState({
-      ...this.state,
-      SearchValue: SearchText.target.value,
+      [event.target.name]: event.target.value,
     });
-    this.props.searchValue(SearchText.target.value);
-  }
+  };
+
+  handleCompare = () => {
+    const { brandOne, brandTwo, brandThree } = this.state;
+    this.props.getBrandProductList(brandOne, brandTwo, brandThree);
+  };
+
   render() {
-    const productlength = this.props.productlength;
     return (
       <Row>
         <Col md="3">
           <Form className="ordering">
             <select
-              name="orderby"
               className="orderby select2"
-              onChange={(e) => this.props.sortValue(e.target.value)}
+              name="brandOne"
+              onChange={(e) => this.onChangeHandler(e)}
               tabIndex={-1}
+              value={this.state.brandOne}
               aria-hidden="true"
             >
-              <option value=" " selected="selected">
+              <option value="" selected="selected">
                 Select Brand First
               </option>
               {this.props.brands.map((data, index) => {
@@ -59,13 +66,13 @@ class TopFilter extends Component {
         <Col md="3">
           <Form className="ordering">
             <select
-              name="orderby"
               className="orderby select2"
-              onChange={(e) => this.props.sortValue(e.target.value)}
+              name="brandTwo"
+              onChange={(e) => this.onChangeHandler(e)}
               tabIndex={-1}
               aria-hidden="true"
             >
-              <option value=" " selected="selected">
+              <option value="" selected="selected">
                 Select Brand Second
               </option>
               {this.props.brands.map((data, index) => {
@@ -82,13 +89,13 @@ class TopFilter extends Component {
         <Col md="3">
           <Form className="ordering">
             <select
-              name="orderby"
               className="orderby select2"
-              onChange={(e) => this.props.sortValue(e.target.value)}
+              name="brandThree"
+              onChange={(e) => this.onChangeHandler(e)}
               tabIndex={-1}
               aria-hidden="true"
             >
-              <option value=" " selected="selected">
+              <option value="" selected="selected">
                 Select Brand Three
               </option>
               {this.props.brands.map((data, index) => {
@@ -102,7 +109,9 @@ class TopFilter extends Component {
           </Form>
         </Col>
         <Col md="3">
-          <Button color="primary">Compare Brand</Button>
+          <Button color="primary" onClick={this.handleCompare}>
+            Compare Brand
+          </Button>
         </Col>
       </Row>
     );
@@ -110,7 +119,7 @@ class TopFilter extends Component {
 }
 
 const mapDispatchToProps = (state) => ({
-  products: getFilterProductsdata(state.data, state.filters),
+  products: getFilterProductsdata(state.data.products, state.filters),
   brands: uniqueBrand(state.data.products),
   filters: state.filters,
 });
@@ -119,4 +128,5 @@ export default connect(mapDispatchToProps, {
   sortValue,
   ratingValue,
   searchValue,
+  getBrandProductList,
 })(TopFilter);

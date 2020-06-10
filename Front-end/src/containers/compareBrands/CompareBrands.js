@@ -10,6 +10,7 @@ import SideFilter from "../../components/widgets/shopfilter/SideFilter";
 import SocialFilter from "../../components/widgets/shopfilter/SocialInfo";
 import TopFilter from "../../components/widgets/shopfilter/TopFilter";
 import BrandTopFilter from "../../components/widgets/shopfilter/BrandTopFilter";
+import axios from "axios";
 
 class CompareBrands extends Component {
   constructor(props, context) {
@@ -34,17 +35,32 @@ class CompareBrands extends Component {
       limit: this.state.limit + 8,
     });
   };
+
   refreshPage = () => {
     window.location.reload(false);
   };
+
+  getBrandsData = (brandOne, brandTwo, brandThree) => {
+    axios.get(
+      `http://localhost:5001/api/v1/products/brands?mainBrand=${brandOne}`
+    );
+  };
+
   render() {
-    let { products } = this.props;
-    let layoutstyle = localStorage.getItem("setLayoutStyle");
+    let {
+      products,
+      brand1Products,
+      brand2Products,
+      brand3Products,
+      productFetched
+    } = this.props;
+    // let layoutstyle = localStorage.getItem("setLayoutStyle");
 
-    if (layoutstyle == null) {
-      layoutstyle = localStorage.setItem("setLayoutStyle", "col-sm-6 col-md-4");
-    }
+    // if (layoutstyle == null) {
+    //    layoutstyle = localStorage.setItem("setLayoutStyle", "col-sm-6 col-md-4");
+    // }
 
+    let layoutstyle = "col-sm-6 col-md-4";
     return (
       <div className="site-content">
         <div className="content-wrapper section-pt mb-3 mb-md-5">
@@ -52,7 +68,7 @@ class CompareBrands extends Component {
             <Row>
               <div className="sidebar col-xl-3 col-lg-4 desktop">
                 <div className="shop-sidebar-widgets">
-                  <SideFilter compareBrand={true}/>
+                  <SideFilter compareBrand={true} />
                 </div>
               </div>
               <div className="content col-xl-9 col-lg-8">
@@ -60,23 +76,47 @@ class CompareBrands extends Component {
                   <div className="loop-header">
                     <div className="loop-header-tools">
                       <div className="loop-header-tools-wrapper">
-                        <BrandTopFilter productlength={products.length} />
+                        <BrandTopFilter getBrandsData={this.getBrandsData} />
                       </div>
                     </div>
                   </div>
                 </div>
-                {products.length > 0 ? (
+                {productFetched ? (
                   <div>
                     <Row className="products products-loop grid webhype-products-shortcode pgs-product-list">
-                      {products
-                        .slice(0, this.state.limit)
-                        .map((product, index) => (
-                          <BrandList
-                            product={product}
-                            key={index}
-                            layoutstyle={layoutstyle}
-                          />
-                        ))}
+                      <Col xs="4">
+                        {brand1Products
+                          .slice(0, this.state.limit)
+                          .map((product, index) => (
+                            <BrandList
+                              product={product}
+                              key={index}
+                              layoutstyle={layoutstyle}
+                            />
+                          ))}
+                      </Col>
+                      <Col xs="4">
+                        {brand2Products
+                          .slice(0, this.state.limit)
+                          .map((product, index) => (
+                            <BrandList
+                              product={product}
+                              key={index}
+                              layoutstyle={layoutstyle}
+                            />
+                          ))}
+                      </Col>
+                      <Col xs="4">
+                        {brand3Products
+                          .slice(0, this.state.limit)
+                          .map((product, index) => (
+                            <BrandList
+                              product={product}
+                              key={index}
+                              layoutstyle={layoutstyle}
+                            />
+                          ))}
+                      </Col>
                     </Row>
                     <div className="text-center">
                       <a onClick={this.onLoadMore} className="loadmore-btn">
@@ -92,7 +132,7 @@ class CompareBrands extends Component {
                         className="img-fluid mb-4"
                       />
                       <h3>
-                        Sorry! No products were found matching your selection!{" "}
+                        Sorry! No products were found matching your selection!
                       </h3>
                       <p>Please try to other words.</p>
                       <button
@@ -112,7 +152,22 @@ class CompareBrands extends Component {
     );
   }
 }
+
 const mapDispatchToProps = (state) => ({
-  products: getFilterProductsdata(state.data, state.filters),
+  products: getFilterProductsdata(state.data.products, state.filters),
+  productFetched: state.ui.productReducersUi.productFetched,
+  brand1Products: getFilterProductsdata(
+    state.data.brand1_products,
+    state.filters
+  ),
+  brand2Products: getFilterProductsdata(
+    state.data.brand2_products,
+    state.filters
+  ),
+  brand3Products: getFilterProductsdata(
+    state.data.brand3_products,
+    state.filters
+  ),
 });
+
 export default connect(mapDispatchToProps, {})(CompareBrands);

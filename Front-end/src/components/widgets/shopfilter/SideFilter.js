@@ -218,7 +218,7 @@ class SideFilter extends Component {
               </a>
             </p>
           </div>
-          <div classs="shop-filter shop-filter-product-price widget_price_filter">
+          <div classs="shop-filter shop-filter-product-price widget_price_filter filterbg">
             <div className="shop-filter-wrapper">
               <div className="price_slider_wrapper">
                 <Slider

@@ -52,7 +52,7 @@ export const getFilterProductsdata = (
 ) => {
   let sizes = size;
 
-  return data.products
+  return data
     .filter((product) => {
       let brandMatchValue;
       if (product.mainBrand)

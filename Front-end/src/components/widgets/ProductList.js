@@ -138,18 +138,12 @@ class ProductList extends Component {
                 <Link to={`/shop/${product.category}/${product.id}`}>
                   {product.pictures[0] ? (
                     <div className="product-thumbnail-main">
-                      <img
-                        src={product.pictures[0]}
-                        className="img-fluid"
-                      />
+                      <img src={product.pictures[0]} className="img-fluid" />
                     </div>
                   ) : null}
                   {product.pictures[1] ? (
                     <div className="product-thumbnail-swap">
-                      <img
-                        src={product.pictures[1]}
-                        className="img-fluid"
-                      />
+                      <img src={product.pictures[1]} className="img-fluid" />
                     </div>
                   ) : null}
                 </Link>
@@ -170,7 +164,7 @@ class ProductList extends Component {
                             1,
                             product.salePrice,
                             "In Stock",
-                           product
+                            product
                           )
                         }
                         className="button add_to_cart_button"

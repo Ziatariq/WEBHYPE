@@ -7,7 +7,7 @@ import "react-image-lightbox/style.css";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { toast } from "react-toastify";
-import { Row } from "reactstrap";
+import { Row, Button } from "reactstrap";
 
 const settings = {
   dots: false,
@@ -142,7 +142,7 @@ class PostDetail extends Component {
     {
       product.pictures.map((pic) => images.push(pic));
     }
-
+    console.log("product: ", product);
     let rat = [];
     let rating = product.rating;
     let i = 1;
@@ -289,6 +289,9 @@ class PostDetail extends Component {
                     )}
                     <div className="clearfix" />
                   </form>
+                  <Button color="primary" href={product.buyUrl}> 
+                    Buy Now
+                  </Button>
                   <div className="product-summary-actions">
                     {!this.CheckWishList(product.id) ? (
                       <div className="add-to-wishlist">
@@ -313,6 +316,7 @@ class PostDetail extends Component {
                       </div>
                     )}
                   </div>
+
                   <div className="product_meta">
                     <span className="sku_wrapper">
                       <label>SKU:</label>

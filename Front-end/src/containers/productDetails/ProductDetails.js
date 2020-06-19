@@ -87,29 +87,6 @@ class ProductDetail extends Component {
       <div>
         {Productedit !== null ? (
           <div className="site-content">
-            <div className="inner-intro">
-              <Container>
-                <Row className="intro-title align-items-center">
-                  <div className="col-12">
-                    <ul className="webhype_breadcrumbs page-breadcrumb breadcrumbs">
-                      <li className="home">
-                        <span>
-                          <Link className="bread-link bread-home" to="/">
-                            Home
-                          </Link>
-                        </span>
-                      </li>
-                      <li>
-                        <span>{Productedit.category}</span>
-                      </li>
-                      <li>
-                        <span>{Productedit.name}</span>
-                      </li>
-                    </ul>
-                  </div>
-                </Row>
-              </Container>
-            </div>
             <div className="content-wrapper section-ptb">
               <Container>
                 <PostDetail

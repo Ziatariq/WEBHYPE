@@ -35,6 +35,9 @@ class TopFilter extends Component {
   handleCompare = () => {
     const { brandOne, brandTwo, brandThree } = this.state;
     this.props.getBrandProductList(brandOne, brandTwo, brandThree);
+    if(this.props.section === "home") {
+      this.props.history.push("/compare-brands")
+    }
   };
 
   render() {

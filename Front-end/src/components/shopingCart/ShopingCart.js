@@ -59,7 +59,6 @@ const ShopingCart = (props) => {
 
               <p className="webhype-mini-cart__buttons buttons">
                 <Link
-                  // onClick={() => HideCart()}
                   to="/compare-products"
                   className="button wc-forward"
                 >

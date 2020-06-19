@@ -2,21 +2,21 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 import { Row, Col, Container } from "reactstrap";
 import { Link } from "react-router-dom";
-import { products } from "../utilities/constants";
+// import { products } from "../utilities/constants";
 import { ToastContainer, toast } from "react-toastify";
 
 function ProductSlider(props) {
   const settings = props.settings;
-  const productSub = props.productSub;
-  var cloneproduct = [];
-  var cnt = 0;
+  // const productSub = props.productSub;
+  // var cloneproduct = [];
+  // var cnt = 0;
 
-  products.map((product, index) => {
-    if (product.subcategory === productSub && cnt < 6) {
-      cloneproduct[cnt] = product;
-      cnt++;
-    }
-  });
+  // products.map((product, index) => {
+  //   if (product.subcategory === productSub && cnt < 6) {
+  //     cloneproduct[cnt] = product;
+  //     cnt++;
+  //   }
+  // });
 
   function AddToCompare(
     ProductID,
@@ -43,9 +43,9 @@ function ProductSlider(props) {
       localStorage.removeItem("LocalCartItems");
       localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
 
-      toast.success("Item Added to Cart");
+      toast.success("Item Added to Compare");
     } else {
-      toast.warning("Item is already in Cart");
+      toast.warning("Item is already in Compare");
     }
   }
 
@@ -61,6 +61,7 @@ function ProductSlider(props) {
     }
     return checkcart;
   }
+
   function CheckWishList(ID) {
     let wishlist = false;
     var Wish = JSON.parse(localStorage.getItem("LocalWishListItems"));
@@ -112,9 +113,9 @@ function ProductSlider(props) {
     let i = 1;
     while (i <= 5) {
       if (i <= productrat) {
-        rat.push(<i className="fa fa-star" key={i}/>);
+        rat.push(<i className="fa fa-star" key={i} />);
       } else {
-        rat.push(<i className="fa fa-star-o" key={i}/>);
+        rat.push(<i className="fa fa-star-o" key={i} />);
       }
       i += 1;
     }
@@ -139,17 +140,17 @@ function ProductSlider(props) {
             {...settings}
             className="slider-spacing-10 slider-arrow-hover"
           >
-            {cloneproduct.map((product, index) => (
+            {props.recommendedProduct.length > 0  && props.recommendedProduct.map((product, index) => (
               <div className="item" key={index}>
                 <div className="product product_tag-black product-hover-style-default product-hover-button-style-dark product_title_type-single_line product_icon_type-line-icon">
                   <div className="product-inner element-hovered">
                     <div className="product-thumbnail">
                       <div className="product-thumbnail-inner">
-                        <a href={`/shop/${product.category}/${product.id}`}>
+                        <Link to={`/shop/${product.category}/${product.id}`}>
                           {product.pictures[0] ? (
                             <div className="product-thumbnail-main">
                               <img
-                                src={require(`../../assets/images/${product.pictures[0]}`)}
+                                src={product.pictures[0]}
                                 className="img-fluid"
                               />
                             </div>
@@ -157,12 +158,12 @@ function ProductSlider(props) {
                           {product.pictures[1] ? (
                             <div className="product-thumbnail-swap">
                               <img
-                                src={require(`../../assets/images/${product.pictures[1]}`)}
+                                src={product.pictures[1]}
                                 className="img-fluid"
                               />
                             </div>
                           ) : null}
-                        </a>
+                        </Link>
                       </div>
 
                       <div className="product-actions">
@@ -237,9 +238,9 @@ function ProductSlider(props) {
                         {product.category}
                       </span>
                       <h3 className="product-name">
-                        <a href={`/shop/${product.category}/${product.id}`}>
+                        <Link to={`/shop/${product.category}/${product.id}`}>
                           {product.name}
-                        </a>
+                        </Link>
                       </h3>
                       <div className="product-rating-price">
                         <span className="price">

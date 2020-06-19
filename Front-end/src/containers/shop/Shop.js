@@ -70,6 +70,7 @@ class Shop extends Component {
                     </div>
                   </div>
                 </div>
+                
                 {products.length > 0 ? (
                   <div>
                     <Row className="products products-loop grid webhype-products-shortcode pgs-product-list">
@@ -117,7 +118,9 @@ class Shop extends Component {
     );
   }
 }
+
 const mapDispatchToProps = (state) => ({
   products: getFilterProductsdata(state.data.products, state.filters),
 });
+
 export default connect(mapDispatchToProps, {})(Shop);

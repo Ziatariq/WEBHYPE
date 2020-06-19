@@ -56,14 +56,9 @@ class Footer extends React.Component {
                       </div>
                       <div className="text-content">
                         <p className="mb-3 mt-4">
-                          webHype is an enchanting and easy to use e-Commerce WP
-                          theme that allows you to sell your products in a
-                          dynamic way.
+                          Webhype is a name which is synonymous with fashions & trends in Pakistan. Established in 2020, this is a company birthed out of an ambitious investment in the fashion industry by the visionary team. Pioneers of providing the latest fashion apparel to the Pakistani consumers, Webhype has been at the forefront of introducing the latest and trendiest clothes for the masses. 
                         </p>
-                        <p className="mb-4">
-                          The theme is packed with everything you need to create
-                          a new website.
-                        </p>
+                        
                       </div>
                     </div>
                     <div className="col-lg-3 col-md-6 footer-align-left"></div>

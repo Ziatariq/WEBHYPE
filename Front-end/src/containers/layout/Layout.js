@@ -4,10 +4,6 @@ import Footer from "../footer/Footer";
 import "./layout.css";
 
 class Layout extends Component {
-  state = {
-    showSidebar: false,
-  };
-
   render() {
     return (
       <div>

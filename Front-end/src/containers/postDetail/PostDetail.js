@@ -63,9 +63,9 @@ class PostDetail extends Component {
       localStorage.removeItem("LocalCartItems");
       localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
 
-      toast.success("Item Added to Cart");
+      toast.success("Item Added to Compare");
     } else {
-      toast.warning("Item is already in Cart");
+      toast.warning("Item is already in Compare");
     }
   }
 

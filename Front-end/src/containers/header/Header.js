@@ -294,12 +294,12 @@ class Header extends React.Component {
                         <Login
                           toggle={this.toggle}
                           activeTab={this.state.activeTab}
-                          logintoggle={this.logintoggle}
+                          logintoggle={(tab) => this.logintoggle(tab)}
                         />
                         <SignUp
                           activeTab={this.state.activeTab}
                           toggle={this.toggle}
-                          logintoggle={this.logintoggle}
+                          logintoggle={(tab) => this.logintoggle(tab)}
                         />
                       </TabContent>
                     </ModalBody>

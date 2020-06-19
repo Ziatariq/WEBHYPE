@@ -2,6 +2,7 @@ import * as Constants from "../constants/constants";
 import { products } from "../../components/utilities/constants";
 import { appData } from "../../components/utilities/data";
 import axios from "axios";
+var _ = require("lodash");
 
 export const getProductList = () => {
   return async (dispatch) => {
@@ -108,4 +109,41 @@ export const selectedBrands = ({ brandOne, brandTwo, brandThree }) => {
       },
     });
   };
+};
+
+export const getSelectedProductList = () => {
+  return async (dispatch) => {
+    const selectedProducts = JSON.parse(localStorage.getItem("LocalCartItems"));
+
+    let urls = selectedProducts && selectedProducts.map((obj) => {
+      return `http://localhost:5001/api/v1/products/brands?mainBrand=${obj.MainBrand}`;
+    });
+    try {
+      fetchData(urls).then((arrayOfResponses) => {
+        dispatch({
+          type: Constants.GET_SELECTED_BRAND_PRODUCT_LIST_SUCCESS,
+          payload: _.shuffle(mergeDedupe(arrayOfResponses))
+        });
+      });
+    } catch (err) {
+      dispatch({
+        type: Constants.GET_BRAND_PRODUCT_LIST_FAILURE,
+        payload: err,
+      });
+    }
+  };
+};
+
+const mergeDedupe = (arr) => {
+  return [...new Set([].concat(...arr))];
+};
+
+const fetchData = (urls) => {
+  const allRequests = urls.map((url) =>
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => data.data)
+  );
+
+  return Promise.all(allRequests);
 };

@@ -9,6 +9,7 @@ import {
   NavLink,
   Row,
 } from "reactstrap";
+import { Link } from 'react-router-dom'
 
 const MainNavbar = (props) => {
   const { navLinks, isOpen, toggle } = props;
@@ -29,9 +30,9 @@ const MainNavbar = (props) => {
                             {navLinks.map((navLink, index) => (
                               <Nav className="ml-auto" navbar key={index}>
                                 <NavItem>
-                                  <NavLink href={navLink.path}>
+                                  <Link to={navLink.path}  onClick={() => console.log("clicked")}>
                                     {navLink.menu_title}
-                                  </NavLink>
+                                  </Link>
                                 </NavItem>
                               </Nav>
                             ))}

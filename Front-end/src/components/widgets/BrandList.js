@@ -47,11 +47,11 @@ class BrandList extends Component {
         localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
         var flag = 0;
         if (flag == 0) {
-          toast.success("Item Added to Cart");
+          toast.success("Item Added to Compare");
           flag = 1;
         }
       } else {
-        toast.warning("Item is already in Cart");
+        toast.warning("Item is already in Compare");
       }
     } else {
       toast.warning("product can not be added more than 4 items");

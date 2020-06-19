@@ -9,6 +9,7 @@ import Subscribe from "../../components/widgets/Subscribe.js";
 import TopSellingProduct from "../../components/widgets/TopSellingProduct.js";
 import ProductSlider from "../../components/widgets/ProductSlider";
 import { connect } from "react-redux";
+import BrandTopFilter from "../../components/widgets/shopfilter/BrandTopFilter";
 
 const relatedslider = {
   dots: false,
@@ -39,10 +40,8 @@ const relatedslider = {
 };
 
 class HomePage extends Component {
-  state = {
-    AllProduct: this.props.products,
-  };
-  
+  state = {};
+
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -62,6 +61,17 @@ class HomePage extends Component {
                   <div className="entry-content">
                     <Container>
                       <EndOfSeason />
+                    </Container>
+                    <Container>
+                      <div className="products-header" style={{maxWidth: '800px', margin: 'auto'}}>
+                        <div className="loop-header">
+                          <div className="loop-header-tools">
+                            <div className="loop-header-tools-wrapper">
+                              <BrandTopFilter section="home"  history={this.props.history} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </Container>
                     <Container>
                       <Row className="mb-0 mb-sm-3 mb-lg-5">
@@ -100,7 +110,7 @@ class HomePage extends Component {
                         <h2>Recommended Products</h2>
                         <div className="row">
                           <ProductSlider
-                            productSub={this.state.AllProduct.subcategory}
+                            recommendedProduct={this.props.recommendedProduct}
                             settings={relatedslider}
                           />
                         </div>
@@ -117,10 +127,8 @@ class HomePage extends Component {
   }
 }
 
-const AppMapStateToProps = (state) => {
-  return {
-    products: state.data.products,
-  };
-};
+const mapDispatchToProps = (state) => ({
+  recommendedProduct: state.data.recommendedProduct,
+});
 
-export default connect(AppMapStateToProps, {})(HomePage);
+export default connect(mapDispatchToProps, {})(HomePage);

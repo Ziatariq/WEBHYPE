@@ -76,7 +76,7 @@ class CompareBrands extends Component {
                   <div className="loop-header">
                     <div className="loop-header-tools">
                       <div className="loop-header-tools-wrapper">
-                        <BrandTopFilter getBrandsData={this.getBrandsData} />
+                        <BrandTopFilter />
                       </div>
                     </div>
                   </div>

@@ -8,7 +8,7 @@ import "../App.css";
 import "../Vendor.js";
 import Shop from "./shop/Shop";
 import ProductDetail from "./productDetails/ProductDetails";
-import { receiveProducts } from "../store/actions/actions";
+import { receiveProducts, getSelectedProductList } from "../store/actions/actions";
 import CompareProducts from "./compareProducts/CompareProducts";
 import CompareBrands from "./compareBrands/CompareBrands";
 
@@ -17,6 +17,7 @@ const history = createBrowserHistory();
 class App extends React.Component {
   componentWillMount() {
     this.props.receiveProducts();
+    this.props.getSelectedProductList();
   }
 
   render() {
@@ -26,8 +27,8 @@ class App extends React.Component {
           <Layout history={history}>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/shop" component={Shop} />
-            <Route exact path="/compare-products" component={CompareProducts} />
             <Route exact path="/compare-brands" component={CompareBrands} />
+            <Route exact path="/compare-products" component={CompareProducts} />
             <Route path={`/shop/:category/:id`} component={ProductDetail} />
           </Layout>
         </Switch>
@@ -38,15 +39,14 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.data.products,
+    products: state.data.products
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    receiveProducts: () => {
-      dispatch(receiveProducts());
-    },
+    receiveProducts: () => { dispatch(receiveProducts())},
+    getSelectedProductList: () => { dispatch(getSelectedProductList())}
   };
 };
 

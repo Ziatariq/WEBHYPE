@@ -747,15 +747,15 @@ export const navLinks = [
     type: "subMenu",
   },
   {
-    menu_title: "Compare Products",
-    type: "subMenu",
-    path: "/compare-products",
-    icon: "home",
-  },
-  {
     menu_title: "Compare Brands",
     type: "subMenu",
     path: "/compare-brands",
+    icon: "home",
+  },
+  {
+    menu_title: "Compare Products",
+    type: "subMenu",
+    path: "/compare-products",
     icon: "home",
   },
 ];

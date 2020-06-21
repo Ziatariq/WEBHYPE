@@ -62,12 +62,27 @@ class HomePage extends Component {
                     <Container>
                       <EndOfSeason />
                     </Container>
+
                     <Container>
-                      <div className="products-header" style={{maxWidth: '800px', margin: 'auto'}}>
+                      <div
+                        className="products-header"
+                        style={{ maxWidth: "800px", margin: "auto" }}
+                      >
                         <div className="loop-header">
                           <div className="loop-header-tools">
                             <div className="loop-header-tools-wrapper">
-                              <BrandTopFilter section="home"  history={this.props.history} />
+                              <div className="section-title">
+                                <h2 className="title">
+                                  Compare your favorite brands
+                                </h2>
+                                <p className="text-center">
+                                  Now all your favorite brands at one place
+                                </p>
+                              </div>
+                              <BrandTopFilter
+                                section="home"
+                                history={this.props.history}
+                              />
                             </div>
                           </div>
                         </div>
@@ -92,12 +107,12 @@ class HomePage extends Component {
                         </Col>
                       </Row>
                     </Container>
-                    <Container>
+                    {/* <Container>
                       <HomeBanner />
-                    </Container>
-                    <div className="container-fluid section-2">
+                    </Container> */}
+                    {/* <div className="container-fluid section-2">
                       <DealOfTheWeek />
-                    </div>
+                    </div> */}
                     <div className="container section-3">
                       <AboutBanner />
                     </div>

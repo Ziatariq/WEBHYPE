@@ -37,6 +37,8 @@ class PostDetail extends Component {
     };
   }
 
+
+
   changePreviewImage(image) {
     this.setState({
       newImage: image,
@@ -139,6 +141,7 @@ class PostDetail extends Component {
     const qty = this.state.qty;
     const { product } = this.props;
     const images = [];
+ 
     {
       product.pictures.map((pic) => images.push(pic));
     }

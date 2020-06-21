@@ -42,13 +42,13 @@ class Footer extends React.Component {
               <div className="footer">
                 <Container>
                   <Row>
-                    <div className="col-lg-3 col-md-6 footer-align-left">
+                    <div className="col-lg-6 col-md-5 footer-align-left">
                       <div className="logo-wrapper widget">
                         <p>
                           <Link to="#">
                             <img
                               className="img-fluid"
-                              src={require(`../../assets/images/logo.svg`)}
+                              src={require(`../../assets/images/PNGArtboard4.png`)}
                               alt="logo"
                             />
                           </Link>
@@ -61,9 +61,8 @@ class Footer extends React.Component {
                         
                       </div>
                     </div>
-                    <div className="col-lg-3 col-md-6 footer-align-left"></div>
-                    <div className="col-lg-3 col-md-6 footer-align-left"></div>
-                    <div className="col-lg-3 col-md-6 footer-align-left">
+                    <div className="col-lg-2 col-md-1 footer-align-left"></div>
+                    <div className="col-lg-4 col-md-5 footer-align-left">
                       <div className="pgs-contact-widget widget mt-4 mt-lg-0">
                         <h4 className="footer-title title">Contact Info</h4>
                         <div className="footer-address">

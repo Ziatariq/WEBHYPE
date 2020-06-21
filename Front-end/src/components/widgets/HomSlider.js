@@ -19,33 +19,18 @@ class HomSlider extends Component {
           <div className="slide-inner">
             <div className="slide-image">
               <img
-                src={require(`../../assets/images/home-01-slider/img-01.jpg`)}
+                src={require(`../../assets/images/home-01-slider/2-1.jpg`)}
                 alt="slide-1"
               />
             </div>
             <div className="slide-content">
               <div className="container">
                 <div className="row">
-                  <div className="col-xl-6 col-md-8">
-                    <div className="slide-left">
-                      <div className="slide-sale">
-                        20
-                        <span>
-                          %<br />
-                          off
-                        </span>
-                      </div>
-                      <div className="slide-title">
-                        <h1>Spring</h1>
-                      </div>
-                      <div className="slide-subtitle">Season festival</div>
-                      <span className="slide-since">Catalogue 2018</span>
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-md-4 text-right d-none d-md-block">
-                    <div className="slide-offer">Limited time offer</div>
-                    <Link className="slide-button" to="/shop">
-                      Get the Offer
+                  <div className="col-xl-6 col-md-4"></div>
+                  <div className="col-xl-6 col-md-8 text-right d-none d-md-block">
+                    <div className="slide-subtitle">Shop at one place</div>
+                    <Link className="slide-button-flat" to="/shop">
+                      Shop now
                     </Link>
                   </div>
                 </div>

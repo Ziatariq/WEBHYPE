@@ -5163,6 +5163,8 @@ footer.site-footer {
 
 footer.site-footer .footer-widgets-wrapper {
   padding: 80px 0 80px;
+  background-color: #33353a;
+  color: white;
 }
 
 footer.site-footer .logo-wrapper {
@@ -5177,7 +5179,7 @@ footer.site-footer .footer-title {
   font-size: 16px;
   line-height: 26px;
   font-weight: 600;
-  color: #323232;
+  color: white;
   margin-bottom: 20px;
 }
 
@@ -11801,7 +11803,7 @@ footer.site-footer.footer-style-2 .footer-widgets-wrapper {
 .products .product-thumbnail {
   position: relative;
   overflow: hidden;
-  height: 444px;
+  height: 215px;
 }
 
 .products a {

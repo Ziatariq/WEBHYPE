@@ -9,7 +9,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import BG_Image from "../../assets/images/categories/default/subscribe-bg.jpg";
+import BG_Image from "../../assets/images/categories/default/section-banner.jpg";
 
 class Subscribe extends Component {
   state = {
@@ -74,7 +74,7 @@ class Subscribe extends Component {
           <Col sm={10} lg={6} md={8}>
             <div className="newsletter-wrapper newsletter-style-1 newsletter-design-4">
               <h2 className="newsletter-title">
-                Subscribe today and get 25% off on your first order!
+                Subscribe today and get notifications of new sales!
               </h2>
               <div className="newsletter">
                 <Button onClick={this.toggle}>Notification</Button>

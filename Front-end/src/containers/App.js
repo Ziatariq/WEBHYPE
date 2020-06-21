@@ -15,6 +15,7 @@ import CompareBrands from "./compareBrands/CompareBrands";
 const history = createBrowserHistory();
 
 class App extends React.Component {
+  
   componentWillMount() {
     this.props.receiveProducts();
     this.props.getSelectedProductList();

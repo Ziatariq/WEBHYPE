@@ -6,9 +6,9 @@ class EndOfSeason extends Component {
   render() {
     return (
       <Row className="section-ptb section-1 align-items-center">
-        <Col sm={12} lg={4} className="text-right mb-4 mb-lg-0">
+        <Col sm={12} lg={3} className="text-right mb-4 mb-lg-0">
           <div className="section-title text-md-right">
-            <h2 className="title text-right">End of Season Sale</h2>
+            <h2 className="title text-right">Buy clothes at webhype</h2>
             <p>
               Avail massive discounts and get exciting offers with our shopping
               across all new arrival categories
@@ -21,10 +21,10 @@ class EndOfSeason extends Component {
             </div>
           </div>
         </Col>
-        <Col md={3} lg={2} className="mb-5 pb-1">
+        <Col md={4} lg={3} className="mb-5 pb-1">
           <div className="single_image-wrapper">
             <img
-              src={require(`../../assets/images/categories/default/season-img1.jpg`)}
+              src={require(`../../assets/images/categories/default/women.jpg`)}
               className="img-fluid attachment-full"
               alt="season-img1"
             />
@@ -40,59 +40,40 @@ class EndOfSeason extends Component {
             </Col>
           </Row>
         </Col>
-        <Col md={3} lg={2} className="mb-5 mt-4 mt-md-0">
+        <Col md={4} lg={3} className="mb-5 mt-4 mt-md-0">
           <div className="single_image-wrapper">
             <img
-              src={require(`../../assets/images/categories/default/banner-video-bg.png`)}
+              src={require(`../../assets/images/categories/default/kids.jpg`)}
               className="img-fluid attachment-full"
               alt="season-img1"
             />
           </div>
           <Row className="single_image-content">
             <Col sm={3} className="col-2 px-0">
-              <div className="border-space border-space-dark" />
+              <div className="border-space border-space-light" />
             </Col>
             <Col sm={9} className="col-10">
               <div className="text-wrapper">
-                <p className="text-dark">Kids</p>
+                <p>Kids</p>
               </div>
             </Col>
           </Row>
         </Col>
-        <Col md={3} lg={2} className="mb-5 mt-4 mt-md-0">
+        <Col md={4} lg={3} className="mb-5 mt-4 mt-md-0 pt-1 pt-md-0">
           <div className="single_image-wrapper">
             <img
-              src={require(`../../assets/images/categories/default/season-img2.jpg`)}
+              src={require(`../../assets/images/categories/default/man.jpg`)}
               className="img-fluid attachment-full"
               alt="season-img2"
             />
           </div>
           <Row className="single_image-content">
             <Col sm={3} className="col-2 px-0">
-              <div className="border-space border-space-dark" />
+              <div className="border-space border-space-light" />
             </Col>
             <Col sm={9} className="col-10">
               <div className="text-wrapper">
-                <p className="text-dark">Kids</p>
-              </div>
-            </Col>
-          </Row>
-        </Col>
-        <Col sm={12} md={3} lg={2} className="mb-5 mt-4 mt-md-0 pt-1 pt-md-0">
-          <div className="single_image-wrapper">
-            <img
-              src={require(`../../assets/images/categories/default/banner-video-bg.png`)}
-              className="img-fluid attachment-full"
-              alt="season-img2"
-            />
-          </div>
-          <Row className="single_image-content">
-            <Col sm={3} className="col-2 px-0">
-              <div className="border-space border-space-dark" />
-            </Col>
-            <Col sm={9} className="col-10">
-              <div className="text-wrapper">
-                <p className="text-dark">Men</p>
+                <p>Men</p>
               </div>
             </Col>
           </Row>

@@ -134,7 +134,7 @@ class TopSellingProduct extends Component {
             <Col sm={6} lg={3} key={index}>
               <div className="product product_tag-black product-hover-style-default product-hover-button-style-dark product_title_type-single_line product_icon_type-line-icon">
                 <div className="product-inner element-hovered">
-                  <div className="product-thumbnail">
+                  <div className="product-thumbnail bransList">
                     <div className="product-thumbnail-inner">
                       <Link to="/shop">
                         <div

@@ -202,7 +202,7 @@ class BrandList extends Component {
                       </Link>
                     ) : (
                       <Link
-                        to="/wishlist"
+                        to="#"
                         className="add_to_wishlist_fill"
                         data-toggle="tooltip"
                         data-original-title="Wishlist"
@@ -302,7 +302,7 @@ class BrandList extends Component {
                       </Link>
                     ) : (
                       <Link
-                        to="/wishlist"
+                        to="#"
                         className="add_to_wishlist_fill"
                         data-toggle="tooltip"
                         data-original-title="Wishlist"

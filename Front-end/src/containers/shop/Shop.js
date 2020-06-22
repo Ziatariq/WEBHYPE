@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
-import { products } from "../../components/utilities/constants";
+// import { products } from "../../components/utilities/constants";
 import { appData } from "../../components/utilities/data";
 import { getFilterProductsdata } from "../../services";
 import ProductList from "../../components/widgets/ProductList";

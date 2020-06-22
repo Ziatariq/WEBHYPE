@@ -129,6 +129,8 @@ class ProductList extends Component {
       }
       i += 1;
     }
+
+    console.log("products: ", this.props.product)
     return (
       <div key={1} className={this.props.layoutstyle}>
         <ToastContainer autoClose={1000} draggable={false} />
@@ -208,7 +210,7 @@ class ProductList extends Component {
                       </Link>
                     ) : (
                       <Link
-                        to="/wishlist"
+                        to="#"
                         className="add_to_wishlist_fill"
                         data-toggle="tooltip"
                         data-original-title="Wishlist"
@@ -323,7 +325,7 @@ class ProductList extends Component {
                       </Link>
                     ) : (
                       <Link
-                        to="/wishlist"
+                        to="#"
                         className="add_to_wishlist_fill"
                         data-toggle="tooltip"
                         data-original-title="Wishlist"

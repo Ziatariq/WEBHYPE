@@ -69,7 +69,6 @@ export const getBrandProductList = (brandOne, brandTwo, brandThree) => {
     dispatch({
       type: Constants.GET_BRAND_PRODUCT_LIST_REQUEST,
     });
-    console.log("get brands");
     try {
       const brandOneData = await axios.get(
         `http://localhost:5001/api/v1/products/brands?mainBrand=${brandOne}`
@@ -113,7 +112,6 @@ export const getSelectedProductList = () => {
       selectedProducts.map((obj) => {
         return `http://localhost:5001/api/v1/products/brands?mainBrand=${obj.MainBrand}`;
       });
-    console.log("selectedProducts: ", selectedProducts);
 
     if (selectedProducts === null || selectedProducts.length === 0) {
       urls = ["http://localhost:5001/api/v1/products/brands?mainBrand=engine"];

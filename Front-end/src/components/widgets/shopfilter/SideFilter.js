@@ -424,14 +424,19 @@ class SideFilter extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  categorys: uniqueCategory(state.data.products),
-  sizes: uniqueSizes(state.data.products),
-  colors: uniqueColors(state.data.products),
-  prices: uniqueMinMaxPrice(state.data.products),
-  brands: uniqueBrand(state.data.products),
-  filters: state.filters,
-});
+const mapStateToProps = (state, ownProps) => {
+  const product = ownProps.compareBrand
+    ? state.data.selectedBrandsProduct
+    : state.data.products;
+  return {
+    categorys: uniqueCategory(product),
+    sizes: uniqueSizes(product),
+    colors: uniqueColors(product),
+    prices: uniqueMinMaxPrice(product),
+    brands: uniqueBrand(product),
+    filters: state.filters,
+  };
+};
 export default connect(mapStateToProps, {
   categoryValue,
   sizeValue,

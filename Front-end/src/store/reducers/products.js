@@ -8,6 +8,7 @@ const inititalState = {
   secondBrand: "",
   thirdBrand: "",
   recommendedProduct: [],
+  selectedBrandsProduct: []
 };
 
 export default (state = inititalState, action) => {
@@ -21,6 +22,7 @@ export default (state = inititalState, action) => {
         brand1_products: action.payload.brandOneData,
         brand2_products: action.payload.brandTwoData,
         brand3_products: action.payload.brandThreeData,
+        selectedBrandsProduct: action.payload.products
       });
     case "SELECTED_BRANDS_LIST":
       return Object.assign({}, state, {

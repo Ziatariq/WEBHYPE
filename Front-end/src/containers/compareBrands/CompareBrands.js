@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
-import { products } from "../../components/utilities/constants";
 import { getFilterProductsdata } from "../../services";
 import BrandList from "../../components/widgets/BrandList";
-// import ShopBanner from "../../components/widgets/shopfilter/ShopBanner";
 import SideFilter from "../../components/widgets/shopfilter/SideFilter";
 import SocialFilter from "../../components/widgets/shopfilter/SocialInfo";
 import TopFilter from "../../components/widgets/shopfilter/TopFilter";
@@ -18,18 +16,9 @@ class CompareBrands extends Component {
     this.state = {
       limit: 8,
       hasMoreProduct: true,
-      getproduct: products,
     };
   }
-  componentWillMount() {
-    if (this.state.limit < this.state.getproduct.length) {
-      setTimeout(() => {
-        this.setState({
-          limit: this.state.limit + 8,
-        });
-      }, 2500);
-    }
-  }
+
   onLoadMore = () => {
     this.setState({
       limit: this.state.limit + 8,
@@ -48,17 +37,12 @@ class CompareBrands extends Component {
 
   render() {
     let {
-      products,
+      // products,
       brand1Products,
       brand2Products,
       brand3Products,
-      productFetched
+      productFetched,
     } = this.props;
-    // let layoutstyle = localStorage.getItem("setLayoutStyle");
-
-    // if (layoutstyle == null) {
-    //    layoutstyle = localStorage.setItem("setLayoutStyle", "col-sm-6 col-md-4");
-    // }
 
     let layoutstyle = "col-sm-6 col-md-4";
     return (
@@ -85,39 +69,58 @@ class CompareBrands extends Component {
                   <div>
                     <Row className="products products-loop grid webhype-products-shortcode pgs-product-list">
                       <Col xs="4">
-                        {brand1Products
-                          .slice(0, this.state.limit)
-                          .map((product, index) => (
-                            <BrandList
-                              product={product}
-                              key={index}
-                              layoutstyle={layoutstyle}
-                            />
-                          ))}
+                        {brand1Products.length !== 0 ? (
+                          brand1Products
+                            .slice(0, this.state.limit)
+                            .map((product, index) => (
+                              <BrandList
+                                product={product}
+                                key={index}
+                                layoutstyle={layoutstyle}
+                              />
+                            ))
+                        ) : (
+                          <p style={{ textAlign: "center" }}>
+                            There is no data in these filters
+                          </p>
+                        )}
                       </Col>
                       <Col xs="4">
-                        {brand2Products
-                          .slice(0, this.state.limit)
-                          .map((product, index) => (
-                            <BrandList
-                              product={product}
-                              key={index}
-                              layoutstyle={layoutstyle}
-                            />
-                          ))}
+                        {brand2Products.length !== 0 ? (
+                          brand2Products
+                            .slice(0, this.state.limit)
+                            .map((product, index) => (
+                              <BrandList
+                                product={product}
+                                key={index}
+                                layoutstyle={layoutstyle}
+                              />
+                            ))
+                        ) : (
+                          <p style={{ textAlign: "center" }}>
+                            There is no data in these filters
+                          </p>
+                        )}
                       </Col>
                       <Col xs="4">
-                        {brand3Products
-                          .slice(0, this.state.limit)
-                          .map((product, index) => (
-                            <BrandList
-                              product={product}
-                              key={index}
-                              layoutstyle={layoutstyle}
-                            />
-                          ))}
+                        {brand3Products.length !== 0 ? (
+                          brand3Products
+                            .slice(0, this.state.limit)
+                            .map((product, index) => (
+                              <BrandList
+                                product={product}
+                                key={index}
+                                layoutstyle={layoutstyle}
+                              />
+                            ))
+                        ) : (
+                          <p style={{ textAlign: "center" }}>
+                            There is no data in these filters
+                          </p>
+                        )}
                       </Col>
                     </Row>
+
                     <div className="text-center">
                       <a onClick={this.onLoadMore} className="loadmore-btn">
                         Load More
@@ -154,7 +157,6 @@ class CompareBrands extends Component {
 }
 
 const mapDispatchToProps = (state) => ({
-  products: getFilterProductsdata(state.data.products, state.filters),
   productFetched: state.ui.productReducersUi.productFetched,
   brand1Products: getFilterProductsdata(
     state.data.brand1_products,

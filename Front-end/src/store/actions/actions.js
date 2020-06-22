@@ -69,7 +69,7 @@ export const getBrandProductList = (brandOne, brandTwo, brandThree) => {
     dispatch({
       type: Constants.GET_BRAND_PRODUCT_LIST_REQUEST,
     });
-
+    console.log("get brands");
     try {
       const brandOneData = await axios.get(
         `http://localhost:5001/api/v1/products/brands?mainBrand=${brandOne}`
@@ -80,34 +80,28 @@ export const getBrandProductList = (brandOne, brandTwo, brandThree) => {
       const brandThreeData = await axios.get(
         `http://localhost:5001/api/v1/products/brands?mainBrand=${brandThree}`
       );
-
-      dispatch({
-        type: Constants.GET_BRAND_PRODUCT_LIST_SUCCESS,
-        payload: {
-          brandOneData: brandOneData.data.data,
-          brandTwoData: brandTwoData.data.data,
-          brandThreeData: brandThreeData.data.data,
-        },
+      Promise.all([
+        brandOneData.data.data,
+        brandTwoData.data.data,
+        brandThreeData.data.data,
+      ]).then((data) => {
+        dispatch({
+          type: Constants.GET_BRAND_PRODUCT_LIST_SUCCESS,
+          payload: {
+            brandOneData: brandOneData.data.data,
+            brandTwoData: brandTwoData.data.data,
+            brandThreeData: brandThreeData.data.data,
+            products: mergeDedupe(data),
+          },
+        });
       });
     } catch (err) {
+      console.log("error");
       dispatch({
         type: Constants.GET_BRAND_PRODUCT_LIST_FAILURE,
         payload: err,
       });
     }
-  };
-};
-
-export const selectedBrands = ({ brandOne, brandTwo, brandThree }) => {
-  return async (dispatch) => {
-    dispatch({
-      type: "SELECTED_BRANDS_LIST",
-      payload: {
-        brandOne,
-        brandTwo,
-        brandThree,
-      },
-    });
   };
 };
 
@@ -119,7 +113,7 @@ export const getSelectedProductList = () => {
       selectedProducts.map((obj) => {
         return `http://localhost:5001/api/v1/products/brands?mainBrand=${obj.MainBrand}`;
       });
-      console.log("selectedProducts: ", selectedProducts)
+    console.log("selectedProducts: ", selectedProducts);
 
     if (selectedProducts === null || selectedProducts.length === 0) {
       urls = ["http://localhost:5001/api/v1/products/brands?mainBrand=engine"];

@@ -1,7 +1,7 @@
 // Get Category Unique Data
 export const uniqueCategory = (products) => {
   var uniqueCategorys = [];
-  products.map((product) => {
+  products.length > 0 && products.map((product) => {
     if (product.tags.length > 0 && product.tags) {
       product.tags.map((categorys) => {
         if (categorys && categorys.length > 0) {
@@ -18,7 +18,7 @@ export const uniqueCategory = (products) => {
 // Get Unique Brand
 export const uniqueBrand = (products) => {
   var uniqueBrands = [];
-  products.map((product) => {
+  products.length > 0 && products.map((product) => {
     if (product.mainBrand !== "" && product.mainBrand) {
       if (uniqueBrands.indexOf(product.mainBrand) === -1) {
         uniqueBrands.push(product.mainBrand);
@@ -31,7 +31,7 @@ export const uniqueBrand = (products) => {
 // Get Size Unique Data
 export const uniqueSizes = (products) => {
   var uniqueSizes = [];
-  products.map((product) => {
+  products.length > 0 && products.map((product) => {
     if (product.size.length > 0 && product.size) {
       product.size.map((sizes) => {
         if (sizes && sizes.length > 0) {

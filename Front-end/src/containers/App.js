@@ -11,6 +11,7 @@ import ProductDetail from "./productDetails/ProductDetails";
 import { receiveProducts, getSelectedProductList } from "../store/actions/actions";
 import CompareProducts from "./compareProducts/CompareProducts";
 import CompareBrands from "./compareBrands/CompareBrands";
+import Profile from "./Profile";
 
 const history = createBrowserHistory();
 
@@ -30,6 +31,7 @@ class App extends React.Component {
             <Route exact path="/shop" component={Shop} />
             <Route exact path="/compare-brands" component={CompareBrands} />
             <Route exact path="/compare-products" component={CompareProducts} />
+            <Route exact path="/profile" component={Profile} />
             <Route path={`/shop/:category/:id`} component={ProductDetail} />
           </Layout>
         </Switch>

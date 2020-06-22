@@ -114,15 +114,22 @@ export const selectedBrands = ({ brandOne, brandTwo, brandThree }) => {
 export const getSelectedProductList = () => {
   return async (dispatch) => {
     const selectedProducts = JSON.parse(localStorage.getItem("LocalCartItems"));
+    let urls =
+      selectedProducts &&
+      selectedProducts.map((obj) => {
+        return `http://localhost:5001/api/v1/products/brands?mainBrand=${obj.MainBrand}`;
+      });
+      console.log("selectedProducts: ", selectedProducts)
 
-    let urls = selectedProducts && selectedProducts.map((obj) => {
-      return `http://localhost:5001/api/v1/products/brands?mainBrand=${obj.MainBrand}`;
-    });
+    if (selectedProducts === null || selectedProducts.length === 0) {
+      urls = ["http://localhost:5001/api/v1/products/brands?mainBrand=engine"];
+    }
+
     try {
       fetchData(urls).then((arrayOfResponses) => {
         dispatch({
           type: Constants.GET_SELECTED_BRAND_PRODUCT_LIST_SUCCESS,
-          payload: _.shuffle(mergeDedupe(arrayOfResponses))
+          payload: _.shuffle(mergeDedupe(arrayOfResponses)),
         });
       });
     } catch (err) {

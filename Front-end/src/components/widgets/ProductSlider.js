@@ -1,51 +1,57 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
+import { connect } from "react-redux";
 import { Row, Col, Container } from "reactstrap";
 import { Link } from "react-router-dom";
 // import { products } from "../utilities/constants";
 import { ToastContainer, toast } from "react-toastify";
+import { getSelectedProductList } from "../../store/actions/actions";
 
 function ProductSlider(props) {
   const settings = props.settings;
-  // const productSub = props.productSub;
-  // var cloneproduct = [];
-  // var cnt = 0;
-
-  // products.map((product, index) => {
-  //   if (product.subcategory === productSub && cnt < 6) {
-  //     cloneproduct[cnt] = product;
-  //     cnt++;
-  //   }
-  // });
 
   function AddToCompare(
     ProductID,
+    MainBrand,
     ProductName,
     ProductImage,
     Qty,
     Rate,
-    StockStatus
+    StockStatus,
+    addProduct
   ) {
     var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+
     if (Cart == null) Cart = new Array();
     let selectedProduct = Cart.find(
-      (product) => product.ProductName === ProductName
+      (product) => product.ProductID === ProductID
     );
-    if (selectedProduct == null) {
-      Cart.push({
-        ProductID: ProductID,
-        ProductName: ProductName,
-        ProductImage: ProductImage,
-        Qty: Qty,
-        Rate: Rate,
-        StockStatus: StockStatus,
-      });
-      localStorage.removeItem("LocalCartItems");
-      localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
 
-      toast.success("Item Added to Compare");
+    if (Cart && Cart.length < 4) {
+      if (selectedProduct == null) {
+        Cart.push({
+          ProductID,
+          MainBrand,
+          ProductName,
+          ProductImage,
+          Qty,
+          Rate,
+          StockStatus,
+          ProductData: addProduct,
+        });
+        localStorage.removeItem("LocalCartItems");
+        localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
+        props.getSelectedProductList();
+        var flag = 0;
+        if (flag == 0) {
+          toast.success("Item Added to Compare");
+          flag = 1;
+        }
+      } else {
+        toast.warning("Item is already in Compare");
+      }
     } else {
-      toast.warning("Item is already in Compare");
+      toast.warning("product can not be added more than 4 items");
     }
   }
 
@@ -140,136 +146,152 @@ function ProductSlider(props) {
             {...settings}
             className="slider-spacing-10 slider-arrow-hover"
           >
-            {props.recommendedProduct.length > 0  && props.recommendedProduct.map((product, index) => (
-              <div className="item" key={index}>
-                <div className="product product_tag-black product-hover-style-default product-hover-button-style-dark product_title_type-single_line product_icon_type-line-icon">
-                  <div className="product-inner element-hovered">
-                    <div className="product-thumbnail">
-                      <div className="product-thumbnail-inner">
-                        <Link to={`/shop/${product.category}/${product.id}`}>
-                          {product.pictures[0] ? (
-                            <div className="product-thumbnail-main">
-                              <img
-                                src={product.pictures[0]}
-                                className="img-fluid"
-                              />
-                            </div>
-                          ) : null}
-                          {product.pictures[1] ? (
-                            <div className="product-thumbnail-swap">
-                              <img
-                                src={product.pictures[1]}
-                                className="img-fluid"
-                              />
-                            </div>
-                          ) : null}
-                        </Link>
-                      </div>
+            {props.recommendedProduct.length > 0 &&
+              props.recommendedProduct.map((product, index) => (
+                <div className="item" key={index}>
+                  <div className="product product_tag-black product-hover-style-default product-hover-button-style-dark product_title_type-single_line product_icon_type-line-icon">
+                    <div className="product-inner element-hovered">
+                      <div className="product-thumbnail">
+                        <div className="product-thumbnail-inner">
+                          <Link to={`/shop/${product.category}/${product.id}`}>
+                            {product.pictures[0] ? (
+                              <div className="product-thumbnail-main">
+                                <img
+                                  src={product.pictures[0]}
+                                  className="img-fluid"
+                                />
+                              </div>
+                            ) : null}
+                            {product.pictures[1] ? (
+                              <div className="product-thumbnail-swap">
+                                <img
+                                  src={product.pictures[1]}
+                                  className="img-fluid"
+                                />
+                              </div>
+                            ) : null}
+                          </Link>
+                        </div>
 
-                      <div className="product-actions">
-                        <div className="product-actions-inner">
-                          <div className="product-action product-action-add-to-cart">
-                            {!CheckCardItem(product.id) ? (
-                              <Link
-                                to={"#"}
-                                onClick={() =>
-                                  AddToCompare(
-                                    product.id,
-                                    product.name,
-                                    product.pictures[0],
-                                    1,
-                                    product.salePrice,
-                                    "In Stock"
-                                  )
-                                }
-                                className="button add_to_cart_button"
-                                rel="nofollow"
-                              >
-                                Add to compare
-                              </Link>
-                            ) : (
-                              <Link
-                                to="/ShopingCart"
-                                className="button add_to_cart_button"
-                                rel="nofollow"
-                              >
-                                View Cart
-                              </Link>
-                            )}
-                          </div>
-                          <div className="product-action product-action-wishlist">
-                            {!CheckWishList(product.id) ? (
-                              <Link
-                                to={"#"}
-                                onClick={() =>
-                                  AddToWishList(
-                                    product.id,
-                                    product.name,
-                                    product.pictures[0],
-                                    1,
-                                    product.salePrice,
-                                    "In Stock"
-                                  )
-                                }
-                                className="add_to_wishlist"
-                                data-toggle="tooltip"
-                                data-original-title="Wishlist"
-                                data-placement="top"
-                              >
-                                Add to Wishlist
-                              </Link>
-                            ) : (
-                              <Link
-                                to="/wishlist"
-                                className="add_to_wishlist_fill"
-                                data-toggle="tooltip"
-                                data-original-title="Wishlist"
-                                data-placement="top"
-                              >
-                                View Wishlist
-                              </Link>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="product-info">
-                      <span className="webhype-product-category">
-                        {product.category}
-                      </span>
-                      <h3 className="product-name">
-                        <Link to={`/shop/${product.category}/${product.id}`}>
-                          {product.name}
-                        </Link>
-                      </h3>
-                      <div className="product-rating-price">
-                        <span className="price">
-                          <ins>
-                            <span className="price-amount amount">
-                              <span className="currency-symbol">$</span>
-                              {product.salePrice.toLocaleString(
-                                navigator.language,
-                                { minimumFractionDigits: 0 }
+                        <div className="product-actions">
+                          <div className="product-actions-inner">
+                            <div className="product-action product-action-add-to-cart">
+                              {!CheckCardItem(product.id) ? (
+                                <Link
+                                  to={"#"}
+                                  onClick={() =>
+                                    AddToCompare(
+                                      product.id,
+                                      product.mainBrand,
+                                      product.name,
+                                      product.pictures[0],
+                                      1,
+                                      product.salePrice,
+                                      "In Stock",
+                                      product
+                                    )
+                                  }
+                                  className="button add_to_cart_button"
+                                  rel="nofollow"
+                                >
+                                  Add to compare
+                                </Link>
+                              ) : (
+                                <Link
+                                  to="/ShopingCart"
+                                  className="button add_to_cart_button"
+                                  rel="nofollow"
+                                >
+                                  View Cart
+                                </Link>
                               )}
-                            </span>
-                          </ins>
-                        </span>
-                        <div className="product-rating">
-                          {rating(product.rating)}
+                            </div>
+                            <div className="product-action product-action-wishlist">
+                              {!CheckWishList(product.id) ? (
+                                <Link
+                                  to={"#"}
+                                  onClick={() =>
+                                    AddToWishList(
+                                      product.id,
+                                      product.name,
+                                      product.pictures[0],
+                                      1,
+                                      product.salePrice,
+                                      "In Stock"
+                                    )
+                                  }
+                                  className="add_to_wishlist"
+                                  data-toggle="tooltip"
+                                  data-original-title="Wishlist"
+                                  data-placement="top"
+                                >
+                                  Add to Wishlist
+                                </Link>
+                              ) : (
+                                <Link
+                                  to="/wishlist"
+                                  className="add_to_wishlist_fill"
+                                  data-toggle="tooltip"
+                                  data-original-title="Wishlist"
+                                  data-placement="top"
+                                >
+                                  View Wishlist
+                                </Link>
+                              )}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div className="product-details__short-description">
-                        <p></p>
+                      <div className="product-info">
+                        <span className="webhype-product-category">
+                          {product.category}
+                        </span>
+                        <h3 className="product-name">
+                          <Link to={`/shop/${product.category}/${product.id}`}>
+                            {product.name}
+                          </Link>
+                        </h3>
+                        <div className="product-rating-price">
+                          <span className="price">
+                            <ins>
+                              <span className="price-amount amount">
+                                <span className="currency-symbol">$</span>
+                                {product.salePrice.toLocaleString(
+                                  navigator.language,
+                                  { minimumFractionDigits: 0 }
+                                )}
+                              </span>
+                            </ins>
+                          </span>
+                          <div className="product-rating">
+                            {rating(product.rating)}
+                          </div>
+                        </div>
+                        <div className="product-details__short-description">
+                          <p></p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </Slider>
         </div>
       </div>
     </Col>
   );
 }
-export default ProductSlider;
+
+
+const mapStateToProps = (state) => {
+  return {};
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSelectedProductList: () => {
+      dispatch(getSelectedProductList());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductSlider);

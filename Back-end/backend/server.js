@@ -20,6 +20,7 @@ connectDB();
 // Route files
 const products = require("./routes/products");
 const brands = require("./routes/brand")
+const registrationRoutes = require('./routes/auth');
 const app = express();
 
 // Body parser
@@ -66,7 +67,7 @@ if (process.env.NODE_ENV === "production") {
 // Mount routers
 app.use("/api/v1/products", products);
 app.use("/api/v1/products",brands);
-
+app.use("./schema/User", registrationRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;

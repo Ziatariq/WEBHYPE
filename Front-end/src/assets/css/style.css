@@ -5535,21 +5535,23 @@ footer.site-footer .footer-bottom-wrapper .footer-bottom .pgs-newsletter-widget 
 }
 
 footer.site-footer .site-info {
-  background: whitesmoke;
+  background: #d65e47;
   padding: 25px 0;
 }
 
 footer.site-footer .site-info .footer-widget p {
   margin-bottom: 0;
-  color: #969696;
+  color: white;
 }
 
 footer.site-footer .site-info .footer-widget p a {
-  color: #969696;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 footer.site-footer .site-info .footer-widget p a:hover {
-  color: #d65e47;
+  color: white;
 }
 
 footer.site-footer .product-tag-cloud .tagcloud a {

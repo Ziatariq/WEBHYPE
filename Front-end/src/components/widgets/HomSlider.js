@@ -52,20 +52,11 @@ class HomSlider extends Component {
                 <div className="row">
                   <div className="col-xl-6 col-md-8">
                     <div className="slide-left">
-                      <div className="slide-title">
-                        <h1>New Arrival</h1>
-                      </div>
-                      <div className="slide-subtitle">For women</div>
+                      <div className="slide-subtitle">Shop at one place</div>
                       <Link className="slide-button-flat" to="/shop">
                         Shop now
                       </Link>
                     </div>
-                  </div>
-                  <div className="col-xl-6 col-md-4 text-right d-none d-md-block">
-                    <div className="slide-offer">Limited time offer</div>
-                    <Link className="slide-button" to="/shop">
-                      Get the Offer
-                    </Link>
                   </div>
                 </div>
               </div>

@@ -70,7 +70,7 @@ class Shop extends Component {
                     </div>
                   </div>
                 </div>
-                
+
                 {products.length > 0 ? (
                   <div>
                     <Row className="products products-loop grid webhype-products-shortcode pgs-product-list">
@@ -78,6 +78,7 @@ class Shop extends Component {
                         .slice(0, this.state.limit)
                         .map((product, index) => (
                           <ProductList
+                            history={this.props.history}
                             product={product}
                             key={index}
                             layoutstyle={layoutstyle}

@@ -1,9 +1,8 @@
-/**
- * ProductList Widget
- */
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import { getSelectedProductList } from "../../store/actions/actions";
 
 class ProductList extends Component {
   constructor(props) {
@@ -30,10 +29,12 @@ class ProductList extends Component {
     addProduct
   ) {
     var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+
     if (Cart == null) Cart = new Array();
     let selectedProduct = Cart.find(
       (product) => product.ProductID === ProductID
     );
+
     if (Cart && Cart.length < 4) {
       if (selectedProduct == null) {
         Cart.push({
@@ -48,6 +49,7 @@ class ProductList extends Component {
         });
         localStorage.removeItem("LocalCartItems");
         localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
+        this.props.getSelectedProductList();
         var flag = 0;
         if (flag == 0) {
           toast.success("Item Added to Compare");
@@ -127,7 +129,6 @@ class ProductList extends Component {
       }
       i += 1;
     }
-
     return (
       <div key={1} className={this.props.layoutstyle}>
         <ToastContainer autoClose={1000} draggable={false} />
@@ -186,16 +187,18 @@ class ProductList extends Component {
                     {!this.CheckWishList(product.id) ? (
                       <Link
                         to="#"
-                        onClick={() =>
-                          this.AddToWishList(
-                            product.id,
-                            product.name,
-                            product.pictures[0],
-                            1,
-                            product.salePrice,
-                            "In Stock"
-                          )
-                        }
+                        onClick={() => {
+                          this.props.loggedIn
+                            ? this.AddToWishList(
+                                product.id,
+                                product.name,
+                                product.pictures[0],
+                                1,
+                                product.salePrice,
+                                "In Stock"
+                              )
+                            : this.props.history.push("/");
+                        }}
                         className="add_to_wishlist"
                         data-toggle="tooltip"
                         data-original-title="Wishlist"
@@ -229,6 +232,19 @@ class ProductList extends Component {
                   ))}
                 </span>
               ) : null}
+              <span>{product.mainBrand}</span>
+
+              {product.colors ? (
+                <span className="webhype-product-category">
+                  {product.colors.map((color, index) => (
+                    <span key={index}>
+                      {color}
+                      {index === product.colors.length - 1 ? "" : ", "}
+                    </span>
+                  ))}
+                </span>
+              ) : null}
+
               {product.name ? (
                 <h3 className="product-name">
                   <Link to={`/shop/${product.category}/${product.id}`}>
@@ -260,11 +276,13 @@ class ProductList extends Component {
                         onClick={() =>
                           this.AddToCompare(
                             product.id,
+                            product.mainBrand,
                             product.name,
                             product.pictures[0],
                             1,
                             product.salePrice,
-                            "In Stock"
+                            "In Stock",
+                            product
                           )
                         }
                         className="button add_to_cart_button"
@@ -330,4 +348,16 @@ class ProductList extends Component {
   }
 }
 
-export default ProductList;
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.auth.authentication.loggedIn,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSelectedProductList: () => {
+      dispatch(getSelectedProductList());
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

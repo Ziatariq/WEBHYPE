@@ -4,6 +4,7 @@ import productReducersUi from "./reducersUi";
 import products from "./products";
 import filters from "./filters";
 import authReducer from "./auth/index";
+import loginReducers from './login.reducers';
 
 const entitiesReducers = combineReducers({
   productListReducer,

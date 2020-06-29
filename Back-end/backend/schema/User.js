@@ -26,6 +26,15 @@ let UserSchema = new Schema({
         type: String,
         required: true,
         trim: true
+    },
+    email: {
+        type: String,
+        // $regex: /@mongodb\.com$/,
+        required: [true, "can't be blank"]
+    },
+    address:{
+        type:String,
+        required:true
     }
 }, {
     collection: 'User'

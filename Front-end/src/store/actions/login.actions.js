@@ -1,61 +1,73 @@
-
 // import { authService } from '../../shared/services/auth.service';
+import * as userConstants from "../constants/constants";
+import Axios from "axios";
 
-export const LOGIN_REQUEST = 'LOGIN_REQUEST'
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
-function requestLogin(creds) {
+function requestLogin() {
   return {
-    type: LOGIN_REQUEST,
-    isFetching: true,
-    isAuthenticated: false,
-    creds
-  }
+    type: userConstants.LOGIN_REQUEST,
+  };
 }
 
-function receiveLogin(token) {
+function receiveLogin() {
   return {
-    type: LOGIN_SUCCESS,
-    isFetching: false,
-    isAuthenticated: true,
-    token
-  }
+    type: userConstants.LOGIN_SUCCESS,
+  };
 }
 
 function loginError(message) {
+  console.log("loginError: ");
   return {
-    type: LOGIN_FAILURE,
-    isFetching: false,
-    isAuthenticated: false,
-    message
-  }
+    type: userConstants.LOGIN_FAILURE,
+    message,
+  };
 }
 
-export const loginUser = (creds) => (dispatch) => {
-  dispatch(requestLogin(creds.username));
-  return authService.attemptAuth(creds.username, creds.password)
-    .then((response) =>  {
-      const token = response.getIdToken().getJwtToken();
-      const refreshToken = response.getRefreshToken().getToken();
-      
-      if (!token) {
-        dispatch(loginError('failed to get token.'));
-        return Promise.reject();
-      } else {
-        localStorage.setItem('user', token);
-        localStorage.setItem('refresh', refreshToken);
-        dispatch(receiveLogin(token))
-      }
-      return response;
-    }).catch(err => {
-      console.log(err);
-        dispatch(loginError('invalid user/pass'));
-    });
+function request() {
+  return { type: userConstants.REGISTER_REQUEST };
 }
+function success(res) {
+  return { type: userConstants.REGISTER_SUCCESS, user: res };
+}
+function failure(res) {
+  return { type: userConstants.REGISTER_FAILURE, message: res };
+}
+
+let apiUrl = "http://localhost:5001";
+
+export const loginUser = (creds) => (dispatch) => {
+  dispatch(requestLogin());
+  return Axios.post(`${apiUrl}/app/login`, creds)
+    .then((response) => {
+      localStorage.setItem("user", JSON.stringify(response.data));
+      dispatch(receiveLogin());
+    })
+    .catch((err) => {
+      dispatch(loginError("invalid user/pass"));
+    });
+};
+
+export const register = (user) => (dispatch) => {
+  dispatch(request());
+  return Axios.post(`${apiUrl}/app/register`, user).then(
+    (res) => {
+      dispatch(success(res.data));
+    },
+    (error) => {
+      dispatch(failure(error.toString()));
+    }
+  );
+};
+
+export const reset = () => (dispatch) => {
+  dispatch({
+    type: userConstants.REGISTER_RESET,
+  });
+};
+
 
 // export const logoutUser = () => (dispatch) => {
 //   dispatch(requestLogout());
 //   localStorage.removeItem('user');
 //   dispatch(receiveLogout());
-// }
+// }vscvzxc.vmsdfgsdfg

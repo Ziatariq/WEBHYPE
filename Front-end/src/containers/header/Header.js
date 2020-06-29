@@ -21,6 +21,8 @@ import WishList from "../../components/wishList/WishList";
 import ToggleNavbar from "../../components/navbar/ToggleNavbar";
 import Login from "../../components/login/Login";
 import SignUp from "../../components/signUp/SignUp";
+import { reset } from "../../store/actions/login.actions";
+import { connect } from "react-redux";
 
 class Header extends React.Component {
   constructor(props) {
@@ -45,6 +47,7 @@ class Header extends React.Component {
       isOpen: !this.state.isOpen,
       modal: !this.state.modal,
     });
+    this.props.reset();
   };
 
   toggleNavbar = () => {
@@ -320,4 +323,13 @@ class Header extends React.Component {
     );
   }
 }
-export default Header;
+
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = {
+  reset: reset,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

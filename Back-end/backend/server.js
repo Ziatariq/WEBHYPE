@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
+const bodyParser = require('body-parser');
 const colors = require("colors");
 const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -11,6 +12,7 @@ const hpp = require("hpp");
 const cors = require("cors");
 const errorHandler = require("./middleware/error");
 const connectDB = require("./config/connectDb");
+const registrationRoutes = require('./routes/route');
 
 // Load env vars
 
@@ -25,6 +27,9 @@ const app = express();
 
 // Body parser
 app.use(express.json());
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Dev logging middleware
 if (process.env.NODE_ENV === "development") {
@@ -67,6 +72,7 @@ if (process.env.NODE_ENV === "production") {
 // Mount routers
 app.use("/api/v1/products", products);
 app.use("/api/v1/products",brands);
+app.use("/app", registrationRoutes);
 // app.use("./schema/User", registrationRoutes);
 app.use(errorHandler);
 

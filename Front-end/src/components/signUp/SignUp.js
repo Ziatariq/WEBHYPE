@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { TabPane, Col, Row } from "reactstrap";
 import classnames from "classnames";
 import { connect } from "react-redux";
-import { userActions } from "../../store/actions/auth";
+import { register } from "../../store/actions/login.actions";
 
 const SignUp = (props) => {
   const { activeTab, toggle, logintoggle } = props;
@@ -13,8 +13,8 @@ const SignUp = (props) => {
     email: "",
     password: "",
     confirm_password: "",
-    phone_number: "",
     address: "",
+    user_name: "",
   });
 
   const handleChange = (e) => {
@@ -29,8 +29,8 @@ const SignUp = (props) => {
       email,
       password,
       confirm_password,
-      phone_number,
       address,
+      user_name,
     } = user;
     if (
       first_name &&
@@ -38,14 +38,14 @@ const SignUp = (props) => {
       email &&
       password &&
       confirm_password &&
-      phone_number &&
-      address
+      address &&
+      user_name
     ) {
       props.register(user);
     }
   };
 
-  const { registering } = props;
+  const { isFetching, isFetched } = props;
 
   return (
     <TabPane tabId="2">
@@ -122,14 +122,14 @@ const SignUp = (props) => {
           </Col>
           <Col md="6">
             <div className="form-group">
-              <label>Phone Number </label>
+              <label>User Name </label>
               <input
                 type="text"
-                name="phone_number"
-                value={user.phone_number}
+                name="user_name"
+                value={user.user_name}
                 onChange={handleChange}
                 className="form-control"
-                placeholder="Enter Phone Number"
+                placeholder="Enter User Name"
               ></input>
             </div>
           </Col>
@@ -149,6 +149,9 @@ const SignUp = (props) => {
             </div>
           </Col>
         </Row>
+        {isFetched && (
+          <p style={{ color: "#d65e47" }}>User Successfully Registered!</p>
+        )}
         <div className="form-group">
           <Link className="btn btn-primary" onClick={handleRegister} to="">
             Register
@@ -157,8 +160,11 @@ const SignUp = (props) => {
             Cancel
           </Link>
         </div>
-        {registering && (
-          <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        {isFetching && (
+          <>
+            <span>Registering  </span>
+            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </>
         )}
         <p className="mb-0">
           Already have account?
@@ -181,12 +187,12 @@ const SignUp = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { registering } = state.registration;
-  return { registering };
+  const { isFetching, isFetched } = state.auth.registration;
+  return { isFetching, isFetched };
 };
 
 const mapDispatchToProps = {
-  register: userActions.register,
+  register: register,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

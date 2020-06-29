@@ -9,13 +9,6 @@ class ProductList extends Component {
     super(props);
     this.AddToCompare = this.AddToCompare.bind(this);
     this.AddToWishList = this.AddToWishList.bind(this);
-
-    this.state = {
-      open: false,
-      stock: "InStock",
-      quantity: 1,
-      image: "",
-    };
   }
 
   AddToCompare(
@@ -29,7 +22,6 @@ class ProductList extends Component {
     addProduct
   ) {
     var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
-
     if (Cart == null) Cart = new Array();
     let selectedProduct = Cart.find(
       (product) => product.ProductID === ProductID
@@ -130,7 +122,6 @@ class ProductList extends Component {
       i += 1;
     }
 
-    console.log("products: ", this.props.product)
     return (
       <div key={1} className={this.props.layoutstyle}>
         <ToastContainer autoClose={1000} draggable={false} />

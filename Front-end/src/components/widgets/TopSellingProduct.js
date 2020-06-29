@@ -120,7 +120,6 @@ class TopSellingProduct extends Component {
   }
 
   onClickCategoryFilter(category) {
-    console.log("brand name: ", category);
     this.props.brandValue([category]);
   }
   render() {

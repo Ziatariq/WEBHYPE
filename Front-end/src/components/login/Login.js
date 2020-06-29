@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TabPane } from "reactstrap";
 import classnames from "classnames";
-import { connect } from 'react-redux';
-import { userActions } from '../../store/actions/auth';
+import { connect } from "react-redux";
+import { loginUser } from "../../store/actions/login.actions";
 const Login = (props) => {
-  const { toggle, activeTab, logintoggle } = props;
+  const { toggle, activeTab, logintoggle, isAuthenticated, isFetching } = props;
   const [login, setLogin] = useState({
-    email: "",
+    user_name: "",
     password: "",
   });
 
@@ -18,9 +18,9 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { username, password } = login;
-    if (username && password) {
-      props.login(username, password);
+    const { user_name, password } = login;
+    if (user_name && password) {
+      props.loginUser(login);
     }
   };
 
@@ -28,14 +28,14 @@ const Login = (props) => {
     <TabPane tabId="1">
       <form>
         <div className="form-group">
-          <label>Email address</label>
+          <label>User Name: </label>
           <input
             type="text"
-            name="email"
-            value={login.email}
+            name="user_name"
+            value={login.user_name}
             onChange={handleChange}
             className="form-control"
-            placeholder="Enter email"
+            placeholder="Enter user name"
           ></input>
         </div>
         <div className="form-group">
@@ -50,16 +50,26 @@ const Login = (props) => {
           ></input>
         </div>
 
+        {isAuthenticated && (
+          <p style={{ color: "#d65e47" }}>Successfully Login!</p>
+        )}
         <div className="form-group">
-          <Link className="btn btn-primary mt-1" to="">
+          <Link
+            className="btn btn-primary mt-1"
+            to=""
+            onClick={(e) => handleSubmit(e)}
+          >
             Log in
           </Link>
           <Link className="btn btn-secondary ml-2 mt-1" onClick={toggle} to="">
             Cancel
           </Link>
         </div>
-        {props.loggingIn && (
-          <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        {isFetching && (
+          <>
+            <span>Trying </span>
+            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </>
         )}
         <p className="mb-0">
           Don't have account?
@@ -81,15 +91,13 @@ const Login = (props) => {
   );
 };
 
-
 function mapState(state) {
-  const { loggingIn } = state.authentication;
-  return { loggingIn };
+  const { isAuthenticated, isFetching } = state.auth.authentication;
+  return { isAuthenticated, isFetching };
 }
 
 const actionCreators = {
-  login: userActions.login,
-  logout: userActions.logout
-}
+  loginUser: loginUser,
+};
 
 export default connect(mapState, actionCreators)(Login);

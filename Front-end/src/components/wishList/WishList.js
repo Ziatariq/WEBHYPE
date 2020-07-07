@@ -6,7 +6,7 @@ const WishList = (props) => {
 
   return (
     <li className="hype-tools-action hype-tools-wishlist">
-      <Link to="#">
+      <Link to="/wishlist">
         <i className="glyph-icon pgsicon-ecommerce-like" />
         <span className="wishlist webhype-wishlist-count">
           {ReadWishListItems() == null ? 0 : ReadWishListItems().length}

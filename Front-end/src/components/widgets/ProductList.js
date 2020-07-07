@@ -55,7 +55,16 @@ class ProductList extends Component {
     }
   }
 
-  AddToWishList(ProductID, ProductName, ProductImage, Qty, Rate, StockStatus) {
+  AddToWishList(
+    ProductID,
+    MainBrand,
+    ProductName,
+    ProductImage,
+    Qty,
+    Rate,
+    StockStatus,
+    addProduct
+  ) {
     var Cart = JSON.parse(localStorage.getItem("LocalWishListItems"));
     if (Cart == null) Cart = new Array();
 
@@ -64,12 +73,14 @@ class ProductList extends Component {
     );
     if (selectedProduct == null) {
       Cart.push({
-        ProductID: ProductID,
-        ProductName: ProductName,
-        ProductImage: ProductImage,
-        Qty: Qty,
-        Rate: Rate,
-        StockStatus: StockStatus,
+        ProductID,
+        MainBrand,
+        ProductName,
+        ProductImage,
+        Qty,
+        Rate,
+        StockStatus,
+        ProductData: addProduct,
       });
       localStorage.removeItem("LocalWishListItems");
       localStorage.setItem("LocalWishListItems", JSON.stringify(Cart));
@@ -184,11 +195,13 @@ class ProductList extends Component {
                           this.props.loggedIn
                             ? this.AddToWishList(
                                 product.id,
+                                product.mainBrand,
                                 product.name,
                                 product.pictures[0],
                                 1,
                                 product.salePrice,
-                                "In Stock"
+                                "In Stock",
+                                product
                               )
                             : this.props.history.push("/");
                         }}

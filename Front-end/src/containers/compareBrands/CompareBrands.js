@@ -44,6 +44,8 @@ class CompareBrands extends Component {
       productFetched,
     } = this.props;
 
+
+
     let layoutstyle = "col-sm-6 col-md-4";
     return (
       <div className="site-content">

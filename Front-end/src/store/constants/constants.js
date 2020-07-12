@@ -46,3 +46,4 @@ export const CLEAR = "ALERT_CLEAR";
 
 
 export const REGISTER_RESET = "REGISTER_RESET"
+export const LOCAL_STRAGE_CHANGE = "LOCAL_STRAGE_CHANGE";

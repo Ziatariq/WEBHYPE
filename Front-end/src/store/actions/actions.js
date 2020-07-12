@@ -146,3 +146,11 @@ const fetchData = (urls) => {
 
   return Promise.all(allRequests);
 };
+
+export function addToCompareItems() {
+  return (dispatch) => {
+    dispatch({
+      type: Constants.LOCAL_STRAGE_CHANGE,
+    });
+  };
+}

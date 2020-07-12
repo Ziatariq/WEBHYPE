@@ -5,6 +5,10 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import { register } from "../../store/actions/login.actions";
 
+const validEmailRegex = RegExp(
+  /^(([^<>()\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+);
+
 const SignUp = (props) => {
   const { activeTab, toggle, logintoggle } = props;
   const [user, setUser] = useState({
@@ -17,12 +21,52 @@ const SignUp = (props) => {
     user_name: "",
   });
 
+  const [errors, setErrors] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    address: "",
+    user_name: "",
+  });
+
   const handleChange = (e) => {
+    let errorsObj = { ...errors };
+    const { name, value } = e.target;
+    switch (name) {
+      case "first_name":
+        errorsObj.first_name = "";
+        break;
+      case "last_name":
+        errorsObj.last_name = "";
+        break;
+      case "email":
+        errorsObj.email = validEmailRegex.test(value)
+          ? ""
+          : "Email is not valid!";
+        break;
+      case "password":
+        errorsObj.password = "";
+        break;
+      case "confirm_password":
+        errorsObj.confirm_password = "";
+        break;
+      case "address":
+        errorsObj.address = "";
+        break;
+      case "user_name":
+        errorsObj.user_name = "";
+        break;
+      default:
+        break;
+    }
+    setErrors(errorsObj);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const handleRegister = (e) => {
-    e.preventDefault();
+    let errorsObj = { ...errors };
     const {
       first_name,
       last_name,
@@ -32,20 +76,60 @@ const SignUp = (props) => {
       address,
       user_name,
     } = user;
+    if (first_name === "") {
+      errorsObj.first_name = "Please enter valid first name!";
+    } else {
+      errorsObj.first_name = "";
+    }
+    if (last_name === "") {
+      errorsObj.last_name = "Please enter valid last name!";
+    } else {
+      errorsObj.last_name = "";
+    }
+    if (email === "") {
+      errorsObj.email = "Please enter valid email!";
+    } else {
+      errorsObj.email = "";
+    }
+    if (password === "") {
+      errorsObj.password = "Please enter valid password!";
+    } else {
+      errorsObj.password = "";
+    }
+    if (confirm_password === "") {
+      errorsObj.confirm_password = "Please enter valid confrim password!";
+    } else {
+      errorsObj.confirm_password = "";
+    }
+    if (address === "") {
+      errorsObj.address = "Please enter valid address!";
+    } else {
+      errorsObj.address = "";
+    }
+    if (user_name === "") {
+      errorsObj.user_name = "Please enter valid user name!";
+    } else {
+      errorsObj.user_name = "";
+    }
+
     if (
       first_name &&
       last_name &&
       email &&
-      password &&
-      confirm_password &&
+      password === confirm_password &&
       address &&
       user_name
     ) {
       props.register(user);
+    } else if (password !== confirm_password) {
+      errorsObj.confirm_password = "Please enter same password!";
+      setErrors(errorsObj);
+    } else {
+      setErrors(errorsObj);
     }
   };
 
-  const { isFetching, isFetched } = props;
+  const { isFetching, isFetched, message } = props;
 
   return (
     <TabPane tabId="2">
@@ -62,6 +146,9 @@ const SignUp = (props) => {
                 className="form-control"
                 placeholder="Enter First Name"
               ></input>
+              {errors.first_name.length > 0 && (
+                <span className="error">{errors.first_name}</span>
+              )}
             </div>
           </Col>
           <Col md="6">
@@ -75,6 +162,9 @@ const SignUp = (props) => {
                 className="form-control"
                 placeholder="Enter Last Name"
               ></input>
+              {errors.last_name.length > 0 && (
+                <span className="error">{errors.last_name}</span>
+              )}
             </div>
           </Col>
         </Row>
@@ -90,6 +180,9 @@ const SignUp = (props) => {
                 className="form-control"
                 placeholder="Enter Email"
               ></input>
+              {errors.email.length > 0 && (
+                <span className="error">{errors.email}</span>
+              )}
             </div>
           </Col>
           <Col md="6">
@@ -103,6 +196,9 @@ const SignUp = (props) => {
                 className="form-control"
                 placeholder="Enter Password"
               ></input>
+              {errors.password.length > 0 && (
+                <span className="error">{errors.password}</span>
+              )}
             </div>
           </Col>
         </Row>
@@ -118,6 +214,9 @@ const SignUp = (props) => {
                 className="form-control"
                 placeholder="Enter Confirm Password"
               ></input>
+              {errors.confirm_password.length > 0 && (
+                <span className="error">{errors.confirm_password}</span>
+              )}
             </div>
           </Col>
           <Col md="6">
@@ -131,6 +230,12 @@ const SignUp = (props) => {
                 className="form-control"
                 placeholder="Enter User Name"
               ></input>
+              {errors.user_name.length > 0 && (
+                <span className="error">{errors.user_name}</span>
+              )}
+               {!isFetched && message && (
+                <span className="error">{message}</span>
+              )}
             </div>
           </Col>
         </Row>
@@ -146,6 +251,9 @@ const SignUp = (props) => {
                 className="form-control"
                 placeholder="Enter Address"
               ></input>
+              {errors.address.length > 0 && (
+                <span className="error">{errors.address}</span>
+              )}
             </div>
           </Col>
         </Row>
@@ -162,7 +270,7 @@ const SignUp = (props) => {
         </div>
         {isFetching && (
           <>
-            <span>Registering  </span>
+            <span>Registering </span>
             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
           </>
         )}
@@ -187,8 +295,8 @@ const SignUp = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { isFetching, isFetched } = state.auth.registration;
-  return { isFetching, isFetched };
+  const { isFetching, isFetched, message } = state.auth.registration;
+  return { isFetching, isFetched, message };
 };
 
 const mapDispatchToProps = {

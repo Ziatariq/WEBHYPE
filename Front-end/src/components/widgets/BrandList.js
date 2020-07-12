@@ -3,20 +3,7 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 class BrandList extends Component {
-  constructor(props) {
-    super(props);
-    this.AddToCompare = this.AddToCompare.bind(this);
-    this.AddToWishList = this.AddToWishList.bind(this);
-
-    this.state = {
-      open: false,
-      stock: "InStock",
-      quantity: 1,
-      image: "",
-    };
-  }
-
-  AddToCompare(
+  AddToCompare = (
     ProductID,
     MainBrand,
     ProductName,
@@ -25,12 +12,13 @@ class BrandList extends Component {
     Rate,
     StockStatus,
     addProduct
-  ) {
+  ) => {
     var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
     if (Cart == null) Cart = new Array();
     let selectedProduct = Cart.find(
       (product) => product.ProductID === ProductID
     );
+
     if (Cart && Cart.length < 4) {
       if (selectedProduct == null) {
         Cart.push({
@@ -56,9 +44,16 @@ class BrandList extends Component {
     } else {
       toast.warning("product can not be added more than 4 items");
     }
-  }
+  };
 
-  AddToWishList(ProductID, ProductName, ProductImage, Qty, Rate, StockStatus) {
+  AddToWishList = (
+    ProductID,
+    ProductName,
+    ProductImage,
+    Qty,
+    Rate,
+    StockStatus
+  ) => {
     var Cart = JSON.parse(localStorage.getItem("LocalWishListItems"));
     if (Cart == null) Cart = new Array();
 
@@ -81,7 +76,7 @@ class BrandList extends Component {
     } else {
       toast.warning("Item is already in WishList");
     }
-  }
+  };
 
   CheckCardItem(ID) {
     let checkcart = false;
@@ -93,6 +88,7 @@ class BrandList extends Component {
         }
       }
     }
+    console.log("check card items for add/view", checkcart);
     return checkcart;
   }
 
@@ -111,8 +107,7 @@ class BrandList extends Component {
   }
 
   render() {
-    const { product } = this.props;
-
+    const { product, key } = this.props;
     let rat = [];
     let rating = product.rating;
     let i = 1;
@@ -126,7 +121,7 @@ class BrandList extends Component {
     }
 
     return (
-      <div key={1}>
+      <div key={key}>
         <ToastContainer autoClose={1000} draggable={false} />
         <div className="product product_tag-black product-hover-style-default product-hover-button-style-light product_title_type-single_line product_icon_type-line-icon">
           <div className="product-inner element-hovered">

@@ -18,29 +18,45 @@ const Login = (props) => {
   });
 
   const handleChange = (e) => {
+    let errorsObj = { ...errors };
+    const { name, value } = e.target;
+    switch (name) {
+      case "user_name":
+        console.log("username:");
+        errorsObj.user_name = "";
+        break;
+      case "password":
+        console.log("password");
+        errorsObj.password = "";
+        break;
+      default:
+        break;
+    }
+    setErrors(errorsObj);
     setLogin({ ...login, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
-    let errorsObj = {...errors};
+    let errorsObj = { ...errors };
     const { user_name, password } = login;
     if (user_name === "") {
       errorsObj.user_name = "Please enter valid user name!";
+    } else {
+      errorsObj.user_name = "";
     }
     if (password === "") {
       errorsObj.password = "Please enter valid password!";
+    } else {
+      errorsObj.password = "";
     }
-    // e.preventDefault();
+    e.preventDefault();
 
     if (user_name && password) {
       props.loginUser(login);
     } else {
       setErrors(errorsObj);
-      console.log("errors state: ", errors);  
     }
   };
-
-  console.log("render");
 
   return (
     <TabPane tabId="1">

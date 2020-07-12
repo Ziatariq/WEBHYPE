@@ -4,6 +4,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { Col, Container, Row, Table } from "reactstrap";
 import Adminsitebar from "../Adminsitebar";
+import { addToCompareItems } from "../../store/actions/actions";
+import { connect } from "react-redux";
 
 class WhishListItems extends Component {
   constructor(props) {
@@ -30,6 +32,7 @@ class WhishListItems extends Component {
     addProduct,
     Index
   ) {
+    this.props.addToCompareItems();
     var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
     if (Cart == null) Cart = new Array();
     let selectedProduct = Cart.find(
@@ -82,6 +85,7 @@ class WhishListItems extends Component {
   }
 
   removeFromWishList = (Index) => {
+    this.props.addToCompareItems();
     var UpdatedCart = JSON.parse(localStorage.getItem("LocalWishListItems"));
     UpdatedCart = UpdatedCart.slice(0, Index).concat(
       UpdatedCart.slice(Index + 1, UpdatedCart.length)
@@ -115,9 +119,7 @@ class WhishListItems extends Component {
                           <th className="product-brand">
                             <span className="nobr">Brands </span>
                           </th>
-                          <th className="product-stock-status">
-                            <span className="nobr">Stock Status </span>
-                          </th>
+                         
                           <th className="product-add-to-cart" />
                         </tr>
 
@@ -144,11 +146,7 @@ class WhishListItems extends Component {
                             <td className="product-price">
                               {CartItem.MainBrand}
                             </td>
-                            <td className="product-stock-status">
-                              <span className="wishlist-in-stock">
-                                {CartItem.StockStatus}
-                              </span>
-                            </td>
+                           
                             <td className="product-add-to-cart">
                               <Link
                                 onClick={() =>
@@ -194,4 +192,16 @@ class WhishListItems extends Component {
     );
   }
 }
-export default WhishListItems;
+
+const mapStateToProps = (state) => {
+  return {};
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCompareItems: () => {
+      dispatch(addToCompareItems());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WhishListItems);

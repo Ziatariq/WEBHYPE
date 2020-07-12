@@ -22,6 +22,8 @@ import ToggleNavbar from "../../components/navbar/ToggleNavbar";
 import Login from "../../components/login/Login";
 import SignUp from "../../components/signUp/SignUp";
 import { reset, logout } from "../../store/actions/login.actions";
+import { addToCompareItems } from "../../store/actions/actions";
+
 import { connect } from "react-redux";
 
 class Header extends React.Component {
@@ -39,6 +41,7 @@ class Header extends React.Component {
       CartHide: true,
       classset: "",
       getproduct: appData,
+      count: 0,
     };
   }
 
@@ -74,12 +77,12 @@ class Header extends React.Component {
   }
 
   ReadCartItems() {
-    console.log("read");
     return JSON.parse(localStorage.getItem("LocalCartItems"));
   }
 
   removeFromCart = (Index) => {
-    console.log("removed");
+    this.setState({ count: this.state.count + 1 });
+    this.props.addToCompareItems();
     var UpdatedCart = JSON.parse(localStorage.getItem("LocalCartItems"));
     UpdatedCart = UpdatedCart.slice(0, Index).concat(
       UpdatedCart.slice(Index + 1, UpdatedCart.length)
@@ -366,12 +369,18 @@ class Header extends React.Component {
 const mapStateToProps = (state) => {
   return {
     authenticated: state.auth.authentication.loggedIn,
+    count: state.ui.productReducersUi.count,
   };
 };
 
-const mapDispatchToProps = {
-  reset: reset,
-  logout: logout,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    reset: reset,
+    logout: logout,
+    addToCompareItems: () => {
+      dispatch(addToCompareItems());
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

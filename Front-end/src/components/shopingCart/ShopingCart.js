@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 const ShopingCart = (props) => {
-  const { ReadCartItems, ShowCart, removeFromCart, HideCart } = props;
+  const { ReadCartItems, ShowCart, removeFromCart, HideCart, count } = props;
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -58,10 +59,7 @@ const ShopingCart = (props) => {
               </div>
 
               <p className="webhype-mini-cart__buttons buttons">
-                <Link
-                  to="/compare-products"
-                  className="button wc-forward"
-                >
+                <Link to="/compare-products" className="button wc-forward">
                   View Comparison
                 </Link>
               </p>
@@ -91,4 +89,12 @@ const ShopingCart = (props) => {
   );
 };
 
-export default ShopingCart;
+const mapStateToProps = (state) => {
+  return {
+    count: state.ui.productReducersUi.count,
+  };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopingCart);

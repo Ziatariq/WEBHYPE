@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import { getSelectedProductList } from "../../store/actions/actions";
+import {
+  getSelectedProductList,
+  addToCompareItems,
+} from "../../store/actions/actions";
 
 class ProductList extends Component {
-  constructor(props) {
-    super(props);
-    this.AddToCompare = this.AddToCompare.bind(this);
-    this.AddToWishList = this.AddToWishList.bind(this);
-  }
-
-  AddToCompare(
+  state = {
+    count: 0,
+  };
+  AddToCompare = (
     ProductID,
     MainBrand,
     ProductName,
@@ -20,7 +20,8 @@ class ProductList extends Component {
     Rate,
     StockStatus,
     addProduct
-  ) {
+  ) => {
+    this.props.addToCompareItems();
     var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
     if (Cart == null) Cart = new Array();
     let selectedProduct = Cart.find(
@@ -53,9 +54,9 @@ class ProductList extends Component {
     } else {
       toast.warning("product can not be added more than 4 items");
     }
-  }
+  };
 
-  AddToWishList(
+  AddToWishList = (
     ProductID,
     MainBrand,
     ProductName,
@@ -64,7 +65,8 @@ class ProductList extends Component {
     Rate,
     StockStatus,
     addProduct
-  ) {
+  ) => {
+    this.props.addToCompareItems();
     var Cart = JSON.parse(localStorage.getItem("LocalWishListItems"));
     if (Cart == null) Cart = new Array();
 
@@ -89,7 +91,7 @@ class ProductList extends Component {
     } else {
       toast.warning("Item is already in WishList");
     }
-  }
+  };
 
   CheckCardItem(ID) {
     let checkcart = false;
@@ -120,7 +122,6 @@ class ProductList extends Component {
 
   render() {
     const { product } = this.props;
-
     let rat = [];
     let rating = product.rating;
     let i = 1;
@@ -179,7 +180,7 @@ class ProductList extends Component {
                       </Link>
                     ) : (
                       <Link
-                        to="/ShopingCart"
+                        to="/compare-products"
                         className="button add_to_cart_button"
                         rel="nofollow"
                       >
@@ -298,7 +299,7 @@ class ProductList extends Component {
                       </Link>
                     ) : (
                       <Link
-                        to="/ShopingCart"
+                        to="/compare-products"
                         className="button add_to_cart_button"
                         rel="nofollow"
                       >
@@ -357,12 +358,17 @@ class ProductList extends Component {
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.auth.authentication.loggedIn,
+    count: state.ui.productReducersUi.count,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getSelectedProductList: () => {
       dispatch(getSelectedProductList());
+    },
+
+    addToCompareItems: () => {
+      dispatch(addToCompareItems());
     },
   };
 };

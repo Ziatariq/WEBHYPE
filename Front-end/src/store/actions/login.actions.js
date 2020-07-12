@@ -58,7 +58,8 @@ export const register = (user) => (dispatch) => {
       dispatch(success(res.data));
     },
     (error) => {
-      dispatch(failure(error.toString()));
+      // dispatch(failure(error.toString()));
+      dispatch(failure("User Name is already taken"));
     }
   );
 };

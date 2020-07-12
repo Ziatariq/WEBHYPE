@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { TabPane } from "reactstrap";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { loginUser } from "../../store/actions/login.actions";
+
 const Login = (props) => {
   const { toggle, activeTab, logintoggle, isAuthenticated, isFetching } = props;
   const [login, setLogin] = useState({
+    user_name: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
     user_name: "",
     password: "",
   });
@@ -16,13 +22,25 @@ const Login = (props) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
+    let errorsObj = {...errors};
     const { user_name, password } = login;
+    if (user_name === "") {
+      errorsObj.user_name = "Please enter valid user name!";
+    }
+    if (password === "") {
+      errorsObj.password = "Please enter valid password!";
+    }
+    // e.preventDefault();
+
     if (user_name && password) {
       props.loginUser(login);
+    } else {
+      setErrors(errorsObj);
+      console.log("errors state: ", errors);  
     }
   };
+
+  console.log("render");
 
   return (
     <TabPane tabId="1">
@@ -37,6 +55,9 @@ const Login = (props) => {
             className="form-control"
             placeholder="Enter user name"
           ></input>
+          {errors.user_name.length > 0 && (
+            <span className="error">{errors.user_name}</span>
+          )}
         </div>
         <div className="form-group">
           <label>Password </label>
@@ -48,10 +69,15 @@ const Login = (props) => {
             className="form-control"
             placeholder="Password"
           ></input>
+          {errors.password.length > 0 && (
+            <span className="error">{errors.password}</span>
+          )}
         </div>
 
-        {isAuthenticated && (
-          <p style={{ color: "#d65e47" }}>Successfully Login!</p>
+        {isAuthenticated ? (
+          <p style={{ color: "#d65e47" }}>{props.message}</p>
+        ) : (
+          <p style={{ color: "red" }}>{props.message}</p>
         )}
         <div className="form-group">
           <Link
@@ -92,8 +118,8 @@ const Login = (props) => {
 };
 
 function mapState(state) {
-  const { isAuthenticated, isFetching } = state.auth.authentication;
-  return { isAuthenticated, isFetching };
+  const { isAuthenticated, isFetching, message } = state.auth.authentication;
+  return { isAuthenticated, isFetching, message };
 }
 
 const actionCreators = {

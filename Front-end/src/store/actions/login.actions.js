@@ -2,7 +2,6 @@
 import * as userConstants from "../constants/constants";
 import Axios from "axios";
 
-
 function requestLogin() {
   return {
     type: userConstants.LOGIN_REQUEST,
@@ -12,11 +11,11 @@ function requestLogin() {
 function receiveLogin() {
   return {
     type: userConstants.LOGIN_SUCCESS,
+    message: "Successfully Login!",
   };
 }
 
 function loginError(message) {
-  console.log("loginError: ");
   return {
     type: userConstants.LOGIN_FAILURE,
     message,
@@ -39,8 +38,13 @@ export const loginUser = (creds) => (dispatch) => {
   dispatch(requestLogin());
   return Axios.post(`${apiUrl}/app/login`, creds)
     .then((response) => {
-      localStorage.setItem("user", JSON.stringify(response.data));
-      dispatch(receiveLogin());
+      if (response.status === 204) {
+        console.log("response: ", response.status);
+        dispatch(loginError("invalid user/pass"));
+      } else {
+        localStorage.setItem("user", JSON.stringify(response.data));
+        dispatch(receiveLogin());
+      }
     })
     .catch((err) => {
       dispatch(loginError("invalid user/pass"));
@@ -59,12 +63,22 @@ export const register = (user) => (dispatch) => {
   );
 };
 
+export const logout = (user) => (dispatch) => {
+  localStorage.removeItem("user");
+  try {
+    dispatch({
+      type: userConstants.USER_SUCESS_LOUOUT,
+    });
+  } catch (e) {
+    console.log("error: ", e);
+  }
+};
+
 export const reset = () => (dispatch) => {
   dispatch({
     type: userConstants.REGISTER_RESET,
   });
 };
-
 
 // export const logoutUser = () => (dispatch) => {
 //   dispatch(requestLogout());

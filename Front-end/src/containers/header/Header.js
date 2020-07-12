@@ -21,7 +21,7 @@ import WishList from "../../components/wishList/WishList";
 import ToggleNavbar from "../../components/navbar/ToggleNavbar";
 import Login from "../../components/login/Login";
 import SignUp from "../../components/signUp/SignUp";
-import { reset } from "../../store/actions/login.actions";
+import { reset, logout } from "../../store/actions/login.actions";
 import { connect } from "react-redux";
 
 class Header extends React.Component {
@@ -50,6 +50,15 @@ class Header extends React.Component {
     this.props.reset();
   };
 
+  logout = () => {
+    this.setState({
+      isOpen: !this.state.isOpen,
+      modal: !this.state.modal,
+    });
+    this.props.logout();
+    this.props.reset();
+  };
+
   toggleNavbar = () => {
     this.setState({
       collapsed: !this.state.collapsed,
@@ -65,10 +74,12 @@ class Header extends React.Component {
   }
 
   ReadCartItems() {
+    console.log("read");
     return JSON.parse(localStorage.getItem("LocalCartItems"));
   }
 
   removeFromCart = (Index) => {
+    console.log("removed");
     var UpdatedCart = JSON.parse(localStorage.getItem("LocalCartItems"));
     UpdatedCart = UpdatedCart.slice(0, Index).concat(
       UpdatedCart.slice(Index + 1, UpdatedCart.length)
@@ -175,7 +186,6 @@ class Header extends React.Component {
   }
 
   render() {
-    console.log("ReadCartItems: ", this.ReadCartItems());
     let pathnames = document.location.href;
     let pathArray = pathnames.split("/");
     let pageName = "/" + pathArray[pathArray.length - 1];
@@ -200,6 +210,7 @@ class Header extends React.Component {
       ); // wait 5 seconds, then reset to false
     }
 
+    const { authenticated } = this.props;
     return (
       <header className="site-header header-style-menu-center" id="site-header">
         {this.state.timeout === false ? (
@@ -231,16 +242,44 @@ class Header extends React.Component {
                                   ReadWishListItems={this.ReadWishListItems}
                                 />
                                 <li>
-                                  <Link
-                                    to="#"
-                                    onClick={this.toggle}
-                                    data-toggle="modal"
-                                    data-target="#"
-                                  >
-                                    <i className="fa fa-sign-in">&nbsp;</i>
-                                    Login
-                                  </Link>
+                                  {!authenticated ? (
+                                    <Link
+                                      to="#"
+                                      onClick={this.toggle}
+                                      data-toggle="modal"
+                                      data-target="#"
+                                    >
+                                      <i className="fa fa-sign-in">&nbsp;</i>
+                                      Login
+                                    </Link>
+                                  ) : (
+                                    <Link
+                                      to="/"
+                                      onClick={this.logout}
+                                      data-toggle="modal"
+                                      data-target="#"
+                                    >
+                                      <i className="fa fa-sign-in">&nbsp;</i>
+                                      Log out
+                                    </Link>
+                                  )}
                                 </li>
+
+                                {authenticated && (
+                                  <li>
+                                    <Link
+                                      to="/profile"
+                                      // onClick={this.logout}
+                                      data-toggle="modal"
+                                      data-target="#"
+                                    >
+                                      <i class="fa fa-user" aria-hidden="true">
+                                        &nbsp;
+                                      </i>
+                                      Profile
+                                    </Link>
+                                  </li>
+                                )}
                               </ul>
                             </div>
                           </div>
@@ -325,11 +364,14 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    authenticated: state.auth.authentication.loggedIn,
+  };
 };
 
 const mapDispatchToProps = {
   reset: reset,
+  logout: logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -35,27 +35,27 @@ class Profile extends Component {
                       <ul class="list-unstyled mb-0">
                         <li>
                           <span>First name:</span>
-                          <strong>{user.first_name}</strong>
+                          <strong>{user && user.first_name}</strong>
                         </li>
                         <li>
                           <span>Last name:</span>
-                          <strong>{user.last_name}</strong>
+                          <strong>{user && user.last_name}</strong>
                         </li>
                         <li>
                           <span>Password:</span>
-                          <strong>{user.password}</strong>
+                          <strong>{user && user.password}</strong>
                         </li>
                         <li>
                           <span>Address:</span>
-                          <strong>{user.address}</strong>
+                          <strong>{user && user.address}</strong>
                         </li>
                         <li>
                           <span>Email:</span>
-                          <strong>{user.email}</strong>
+                          <strong>{user && user.email}</strong>
                         </li>
                         <li>
                           <span>User Name:</span>
-                          <strong>{user.user_name}</strong>
+                          <strong>{user && user.user_name}</strong>
                         </li>
                       </ul>
                     </div>

@@ -3,7 +3,7 @@ import * as userConstants from "../../constants/constants";
 let user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
-  user: user ? user : null,
+  user: user ? JSON.stringify(user) : null,
   loggedIn: user ? true : false,
   isAuthenticated: false,
   isFetching: false,
@@ -20,6 +20,9 @@ export function authentication(state = initialState, action) {
       return {
         isAuthenticated: true,
         isFetching: false,
+        message: action.message,
+        user: JSON.stringify(user),
+        loggedIn: true,
       };
     case userConstants.LOGIN_FAILURE:
       return {
@@ -27,10 +30,15 @@ export function authentication(state = initialState, action) {
         isAuthenticated: false,
         isFetching: false,
       };
-    case userConstants.LOGOUT:
-      return {};
+    case userConstants.USER_SUCESS_LOUOUT:
+      return {
+        isAuthenticated: false,
+        isFetching: false,
+        message: "",
+        user: null,
+        loggedIn: false,
+      };
     case userConstants.REGISTER_RESET:
-      console.log("reset");
       return Object.assign({}, state, {
         isAuthenticated: false,
         isFetching: false,

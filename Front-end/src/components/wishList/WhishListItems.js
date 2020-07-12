@@ -97,8 +97,7 @@ class WhishListItems extends Component {
         <div className="content-wrapper section-ptb">
           <Container>
             <Row>
-              <Adminsitebar />
-              <Col lg={9} className="mt-4 mt-lg-0">
+              <Col lg={12} className="mt-4 mt-lg-0">
                 {this.ReadWishListItems() != null &&
                 this.ReadWishListItems().length > 0 ? (
                   <div className="table-responsive">

@@ -8,7 +8,10 @@ import "../App.css";
 import "../Vendor.js";
 import Shop from "./shop/Shop";
 import ProductDetail from "./productDetails/ProductDetails";
-import { receiveProducts, getSelectedProductList } from "../store/actions/actions";
+import {
+  receiveProducts,
+  getSelectedProductList,
+} from "../store/actions/actions";
 import CompareProducts from "./compareProducts/CompareProducts";
 import CompareBrands from "./compareBrands/CompareBrands";
 import Profile from "./Profile";
@@ -17,7 +20,6 @@ import WhishListItems from "../components/wishList/WhishListItems";
 const history = createBrowserHistory();
 
 class App extends React.Component {
-  
   componentWillMount() {
     this.props.receiveProducts();
     this.props.getSelectedProductList();
@@ -33,7 +35,9 @@ class App extends React.Component {
             <Route exact path="/compare-brands" component={CompareBrands} />
             <Route exact path="/compare-products" component={CompareProducts} />
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/wishlist" component={WhishListItems} />
+            {this.props.authenticated && (
+              <Route exact path="/wishlist" component={WhishListItems} />
+            )}
             <Route path={`/shop/:category/:id`} component={ProductDetail} />
           </Layout>
         </Switch>
@@ -44,14 +48,19 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.data.products
+    products: state.data.products,
+    authenticated: state.auth.authentication.loggedIn,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    receiveProducts: () => { dispatch(receiveProducts())},
-    getSelectedProductList: () => { dispatch(getSelectedProductList())}
+    receiveProducts: () => {
+      dispatch(receiveProducts());
+    },
+    getSelectedProductList: () => {
+      dispatch(getSelectedProductList());
+    },
   };
 };
 

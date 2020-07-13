@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { addToCompareItems } from "../../store/actions/actions";
+import { connect } from "react-redux";
 
 class BrandList extends Component {
   AddToCompare = (
@@ -13,6 +15,7 @@ class BrandList extends Component {
     StockStatus,
     addProduct
   ) => {
+    this.props.addToCompareItems();
     var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
     if (Cart == null) Cart = new Array();
     let selectedProduct = Cart.find(
@@ -54,6 +57,7 @@ class BrandList extends Component {
     Rate,
     StockStatus
   ) => {
+    this.props.addToCompareItems();
     var Cart = JSON.parse(localStorage.getItem("LocalWishListItems"));
     if (Cart == null) Cart = new Array();
 
@@ -120,6 +124,7 @@ class BrandList extends Component {
       i += 1;
     }
 
+    console.log("brand list")
     return (
       <div key={key}>
         <ToastContainer autoClose={1000} draggable={false} />
@@ -166,7 +171,7 @@ class BrandList extends Component {
                       </Link>
                     ) : (
                       <Link
-                        to="/ShopingCart"
+                        to="/compare-products"
                         className="button add_to_cart_button"
                         rel="nofollow"
                       >
@@ -266,7 +271,7 @@ class BrandList extends Component {
                       </Link>
                     ) : (
                       <Link
-                        to="/ShopingCart"
+                        to="/compare-products"
                         className="button add_to_cart_button"
                         rel="nofollow"
                       >
@@ -278,7 +283,9 @@ class BrandList extends Component {
                     {!this.CheckWishList(product.id) ? (
                       <Link
                         to="#"
-                        onClick={() =>
+                        onClick={() => {
+                          this.props.loggedIn
+                            ?
                           this.AddToWishList(
                             product.id,
                             product.name,
@@ -287,7 +294,9 @@ class BrandList extends Component {
                             product.salePrice,
                             "In Stock"
                           )
+                          : this.props.history.push("/");
                         }
+                      }
                         className="add_to_wishlist"
                         data-toggle="tooltip"
                         data-original-title="Wishlist"
@@ -317,4 +326,17 @@ class BrandList extends Component {
   }
 }
 
-export default BrandList;
+const mapStateToProps = (state) => ({
+  count: state.ui.productReducersUi.count,
+  loggedIn: state.auth.authentication.loggedIn,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCompareItems: () => {
+      dispatch(addToCompareItems());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BrandList);

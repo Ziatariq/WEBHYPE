@@ -78,7 +78,7 @@ const Login = (props) => {
         <div className="form-group">
           <label>Password </label>
           <input
-            type="text"
+            type="password"
             name="password"
             value={login.password}
             onChange={handleChange}

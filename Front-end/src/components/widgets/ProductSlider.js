@@ -5,7 +5,10 @@ import { Row, Col, Container } from "reactstrap";
 import { Link } from "react-router-dom";
 // import { products } from "../utilities/constants";
 import { ToastContainer, toast } from "react-toastify";
-import { getSelectedProductList } from "../../store/actions/actions";
+import {
+  getSelectedProductList,
+  addToCompareItems,
+} from "../../store/actions/actions";
 
 function ProductSlider(props) {
   const settings = props.settings;
@@ -20,6 +23,7 @@ function ProductSlider(props) {
     StockStatus,
     addProduct
   ) {
+    props.addToCompareItems();
     var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
 
     if (Cart == null) Cart = new Array();
@@ -90,6 +94,7 @@ function ProductSlider(props) {
     Rate,
     StockStatus
   ) {
+    props.addToCompareItems();
     var Cart = JSON.parse(localStorage.getItem("LocalWishListItems"));
     if (Cart == null) Cart = new Array();
 
@@ -210,16 +215,18 @@ function ProductSlider(props) {
                               {!CheckWishList(product.id) ? (
                                 <Link
                                   to={"#"}
-                                  onClick={() =>
-                                    AddToWishList(
-                                      product.id,
-                                      product.name,
-                                      product.pictures[0],
-                                      1,
-                                      product.salePrice,
-                                      "In Stock"
-                                    )
-                                  }
+                                  onClick={() => {
+                                    props.loggedIn
+                                      ? AddToWishList(
+                                          product.id,
+                                          product.name,
+                                          product.pictures[0],
+                                          1,
+                                          product.salePrice,
+                                          "In Stock"
+                                        )
+                                      : props.history.push("/");
+                                  }}
                                   className="add_to_wishlist"
                                   data-toggle="tooltip"
                                   data-original-title="Wishlist"
@@ -282,14 +289,19 @@ function ProductSlider(props) {
   );
 }
 
-
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    loggedIn: state.auth.authentication.loggedIn,
+    count: state.ui.productReducersUi.count,
+  };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getSelectedProductList: () => {
       dispatch(getSelectedProductList());
+    },
+    addToCompareItems: () => {
+      dispatch(addToCompareItems());
     },
   };
 };

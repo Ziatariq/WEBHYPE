@@ -44,8 +44,6 @@ class CompareBrands extends Component {
       productFetched,
     } = this.props;
 
-
-
     let layoutstyle = "col-sm-6 col-md-4";
     return (
       <div className="site-content">
@@ -78,6 +76,7 @@ class CompareBrands extends Component {
                               <BrandList
                                 product={product}
                                 key={index}
+                                history={this.props.history}
                                 layoutstyle={layoutstyle}
                               />
                             ))
@@ -95,6 +94,7 @@ class CompareBrands extends Component {
                               <BrandList
                                 product={product}
                                 key={index}
+                                history={this.props.history}
                                 layoutstyle={layoutstyle}
                               />
                             ))
@@ -112,6 +112,7 @@ class CompareBrands extends Component {
                               <BrandList
                                 product={product}
                                 key={index}
+                                history={this.props.history}
                                 layoutstyle={layoutstyle}
                               />
                             ))
@@ -158,7 +159,7 @@ class CompareBrands extends Component {
   }
 }
 
-const mapDispatchToProps = (state) => ({
+const mapStateToProps = (state) => ({
   productFetched: state.ui.productReducersUi.productFetched,
   brand1Products: getFilterProductsdata(
     state.data.brand1_products,
@@ -174,4 +175,8 @@ const mapDispatchToProps = (state) => ({
   ),
 });
 
-export default connect(mapDispatchToProps, {})(CompareBrands);
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompareBrands);

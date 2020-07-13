@@ -127,6 +127,7 @@ class HomePage extends Component {
                           <ProductSlider
                             recommendedProduct={this.props.recommendedProduct}
                             settings={relatedslider}
+                            history={this.props.history}
                           />
                         </div>
                       </div>

@@ -54,11 +54,11 @@ class Header extends React.Component {
   };
 
   logout = () => {
+    this.props.logout();
     this.setState({
       isOpen: !this.state.isOpen,
       modal: !this.state.modal,
     });
-    this.props.logout();
     this.props.reset();
   };
 
@@ -375,8 +375,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    reset: reset,
-    logout: logout,
+    reset: () => {
+      dispatch(reset());
+    },
+    logout: () => {
+      dispatch(logout());
+    },
     addToCompareItems: () => {
       dispatch(addToCompareItems());
     },

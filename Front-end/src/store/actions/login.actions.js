@@ -64,7 +64,8 @@ export const register = (user) => (dispatch) => {
   );
 };
 
-export const logout = (user) => (dispatch) => {
+export const logout = () => (dispatch) => {
+  console.log("logout")
   localStorage.removeItem("user");
   try {
     dispatch({

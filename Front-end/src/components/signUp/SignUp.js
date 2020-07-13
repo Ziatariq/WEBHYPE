@@ -189,7 +189,7 @@ const SignUp = (props) => {
             <div className="form-group">
               <label>Password </label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 value={user.password}
                 onChange={handleChange}
@@ -207,7 +207,7 @@ const SignUp = (props) => {
             <div className="form-group">
               <label>Confirm Password</label>
               <input
-                type="text"
+                type="password"
                 name="confirm_password"
                 value={user.confirm_password}
                 onChange={handleChange}

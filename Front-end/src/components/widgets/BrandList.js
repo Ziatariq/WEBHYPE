@@ -240,18 +240,14 @@ class BrandList extends Component {
                 </h3>
               ) : null}
               <div className="product-rating-price">
-                {product.salePrice ? (
-                  <span className="price">
-                    <ins>
-                      <span className="price-amount amount">
-                        <span className="currency-symbol">$</span>
-                        {product.salePrice.toLocaleString(navigator.language, {
-                          minimumFractionDigits: 0,
-                        })}
-                      </span>
-                    </ins>
-                  </span>
-                ) : null}
+                <span className="price">
+                  <ins>
+                    <span className="price-amount amount">
+                      {/* <span className="currency-symbol">$</span> */}
+                      {product.price} Pkr
+                    </span>
+                  </ins>
+                </span>
               </div>
               <div className="product-actions product-actions-list">
                 <div className="product-actions-inner">

@@ -15,7 +15,7 @@ registrationRoutes.route(RouteNames.register).post(function(req, res) {
         });
 });
 
-// Login Router
+// Login Routerasdfasdf
 registrationRoutes.route(RouteNames.login).post(function(req, res) {
     Registration.findOne({ user_name: req.body.user_name })
         .then(user => {

@@ -10,51 +10,13 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import BG_Image from "../../assets/images/categories/default/section-banner.jpg";
-
+import SignUp from "../signUp/SignUp";
 class Subscribe extends Component {
   state = {
     fieldvalue: {},
     errors: {},
     modal: false,
   };
-
-  handleValidation() {
-    let fieldvalue = this.state.fieldvalue;
-    let errors = {};
-    let formIsValid = true;
-
-    //Email ID
-    if (!fieldvalue["newsletter_email"]) {
-      formIsValid = false;
-      errors["newsletter_email"] = "Please Enter Email ID";
-    }
-
-    if (typeof fieldvalue["newsletter_email"] !== "undefined") {
-      if (
-        !fieldvalue["newsletter_email"].match(
-          /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
-        )
-      ) {
-        formIsValid = false;
-        errors["newsletter_email"] = "Please Enter Valid Email Address";
-      }
-    }
-    this.setState({ errors: errors });
-    return formIsValid;
-  }
-
-  onProfileFormSubmit(e) {
-    e.preventDefault();
-    if (this.handleValidation()) {
-      return true;
-    }
-  }
-
-  handleChange(field, e) {
-    let fieldvalue = this.state.fieldvalue;
-    fieldvalue[field] = e.target.value;
-    this.setState({ fieldvalue });
-  }
 
   toggle = () => {
     this.setState({
@@ -88,99 +50,7 @@ class Subscribe extends Component {
               Notification
             </ModalHeader>
             <ModalBody>
-              <form>
-                <Row>
-                  <Col md="6">
-                    <div className="form-group">
-                      <label>First Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter First Name"
-                      ></input>
-                    </div>
-                  </Col>
-                  <Col md="6">
-                    <div className="form-group">
-                      <label>Last Name </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter Last Name"
-                      ></input>
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md="6">
-                    <div className="form-group">
-                      <label>Email address</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter Email"
-                      ></input>
-                    </div>
-                  </Col>
-                  <Col md="6">
-                    <div className="form-group">
-                      <label>Password </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter Password"
-                      ></input>
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md="6">
-                    <div className="form-group">
-                      <label>Confirm Password</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter Confirm Password"
-                      ></input>
-                    </div>
-                  </Col>
-                  <Col md="6">
-                    <div className="form-group">
-                      <label>Phone Number </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter Phone Number"
-                      ></input>
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div className="form-group">
-                      <label>Address</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter Address"
-                      ></input>
-                    </div>
-                  </Col>
-                </Row>
-
-                <div className="form-group">
-                  <Link className="btn btn-primary" to="">
-                    Register
-                  </Link>
-                  <Link
-                    className="btn btn-secondary ml-2"
-                    onClick={this.toggle}
-                    to=""
-                  >
-                    Cancel
-                  </Link>
-                </div>
-              </form>
+              <SignUp toggle={this.toggle} />
             </ModalBody>
           </Modal>
         </Row>

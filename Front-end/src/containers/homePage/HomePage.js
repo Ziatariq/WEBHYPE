@@ -107,12 +107,6 @@ class HomePage extends Component {
                         </Col>
                       </Row>
                     </Container>
-                    {/* <Container>
-                      <HomeBanner />
-                    </Container> */}
-                    {/* <div className="container-fluid section-2">
-                      <DealOfTheWeek />
-                    </div> */}
                     <div className="container section-3">
                       <AboutBanner />
                     </div>

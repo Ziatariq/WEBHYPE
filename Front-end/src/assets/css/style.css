@@ -15227,12 +15227,12 @@ ul.products .product-inner .product-info .stock {
   font-family: inherit;
 }
 
-.single-product .cart .button:before {
+/* .single-product .cart .button:before {
   content: "\f217";
   font-family: FontAwesome;
   font-size: 16px;
   padding-right: 15px;
-}
+} */
 
 .single-product .cart .button:hover {
   background: #323232;

@@ -1,13 +1,12 @@
-/*
- * Post Detail Page
- */
 import React, { Component } from "react";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import { toast } from "react-toastify";
+import { toast,ToastContainer } from "react-toastify";
 import { Row, Button } from "reactstrap";
+import { addToCompareItems } from "../../store/actions/actions";
+import { connect } from "react-redux";
 
 const settings = {
   dots: false,
@@ -37,8 +36,6 @@ class PostDetail extends Component {
     };
   }
 
-
-
   changePreviewImage(image) {
     this.setState({
       newImage: image,
@@ -47,31 +44,62 @@ class PostDetail extends Component {
   }
 
   // Add To Compare
-  AddToCompare(ProductID, ProductName, ProductImage, Qty, Rate, StockStatus) {
+  AddToCompare = (
+    ProductID,
+    MainBrand,
+    ProductName,
+    ProductImage,
+    Qty,
+    Rate,
+    StockStatus,
+    addProduct
+  ) => {
+    this.props.addToCompareItems();
     var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
     if (Cart == null) Cart = new Array();
     let selectedProduct = Cart.find(
-      (product) => product.ProductName === ProductName
+      (product) => product.ProductID === ProductID
     );
-    if (selectedProduct == null) {
-      Cart.push({
-        ProductID: ProductID,
-        ProductName: ProductName,
-        ProductImage: ProductImage,
-        Qty: Qty,
-        Rate: Rate,
-        StockStatus: StockStatus,
-      });
-      localStorage.removeItem("LocalCartItems");
-      localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
 
-      toast.success("Item Added to Compare");
+    if (Cart && Cart.length < 4) {
+      if (selectedProduct == null) {
+        Cart.push({
+          ProductID,
+          MainBrand,
+          ProductName,
+          ProductImage,
+          Qty,
+          Rate,
+          StockStatus,
+          ProductData: addProduct,
+        });
+        localStorage.removeItem("LocalCartItems");
+        localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
+      
+        var flag = 0;
+        if (flag == 0) {
+          toast.success("Item Added to Compare");
+          flag = 1;
+        }
+      } else {
+        toast.warning("Item is already in Compare");
+      }
     } else {
-      toast.warning("Item is already in Compare");
+      toast.warning("product can not be added more than 4 items");
     }
-  }
+  };
 
-  AddToWishList(ProductID, ProductName, ProductImage, Qty, Rate, StockStatus) {
+  AddToWishList = (
+    ProductID,
+    MainBrand,
+    ProductName,
+    ProductImage,
+    Qty,
+    Rate,
+    StockStatus,
+    addProduct
+  ) => {
+    this.props.addToCompareItems();
     var Cart = JSON.parse(localStorage.getItem("LocalWishListItems"));
     if (Cart == null) Cart = new Array();
 
@@ -80,12 +108,14 @@ class PostDetail extends Component {
     );
     if (selectedProduct == null) {
       Cart.push({
-        ProductID: ProductID,
-        ProductName: ProductName,
-        ProductImage: ProductImage,
-        Qty: Qty,
-        Rate: Rate,
-        StockStatus: StockStatus,
+        ProductID,
+        MainBrand,
+        ProductName,
+        ProductImage,
+        Qty,
+        Rate,
+        StockStatus,
+        ProductData: addProduct,
       });
       localStorage.removeItem("LocalWishListItems");
       localStorage.setItem("LocalWishListItems", JSON.stringify(Cart));
@@ -94,7 +124,7 @@ class PostDetail extends Component {
     } else {
       toast.warning("Item is already in WishList");
     }
-  }
+  };
 
   PlusQty = () => {
     this.setState({
@@ -141,11 +171,10 @@ class PostDetail extends Component {
     const qty = this.state.qty;
     const { product } = this.props;
     const images = [];
- 
+
     {
       product.pictures.map((pic) => images.push(pic));
     }
-    console.log("product: ", product);
     let rat = [];
     let rating = product.rating;
     let i = 1;
@@ -160,6 +189,7 @@ class PostDetail extends Component {
 
     return (
       <section>
+        <ToastContainer autoClose={1000} draggable={false} />
         <div className="product-content-top single-product">
           <Row>
             <div className="product-top-left col-xl-5 col-md-6">
@@ -219,64 +249,28 @@ class PostDetail extends Component {
               <div className="product-top-right-inner">
                 <div className="summary entry-summary">
                   <h1 className="product_title entry-title">{product.name}</h1>
-                  {/* <div className="product-rating">
-                    <div className="star-rating">{rat}</div>
-                    <p className="review-link mt-2">
-                      (<span className="count">{rating}</span> customer reviews)
-                    </p>
-                  </div> */}
-                  {/* <p className="price">{`$${(
-                    product.salePrice * qty
-                  ).toLocaleString(navigator.language, {
-                    minimumFractionDigits: 0,
-                  })}`}</p> */}
+
                   <div className="product-details__short-description">
                     <div className="pdp-about-details-txt pdp-about-details-equit">
                       {product.description}
                     </div>
                   </div>
                   <form className="cart">
-                    {/* <div className="quantity">
-                      <label
-                        className="screen-reader-text"
-                        htmlFor="quantity_5cdab503cf26f"
-                      >
-                        Quantity
-                      </label>
-                      <input
-                        type="text"
-                        className="input-text qty text"
-                        value={qty}
-                        title="Qty"
-                      />
-                      <div className="quantity-nav">
-                        <Link
-                          className="quantity-button quantity-up"
-                          onClick={() => this.PlusQty()}
-                        >
-                          +
-                        </Link>
-                        <Link
-                          className="quantity-button quantity-down"
-                          onClick={() => this.MinusQty()}
-                        >
-                          -
-                        </Link>
-                      </div>
-                    </div> */}
                     {!this.CheckCardItem(product.id) ? (
                       <Link
                         onClick={() =>
                           this.AddToCompare(
                             product.id,
+                            product.mainBrand,
                             product.name,
                             product.pictures[0],
-                            qty,
+                            1,
                             product.salePrice,
-                            "In Stock"
+                            "In Stock",
+                            product
                           )
                         }
-                        className="button single_add_to_cart_button"
+                        className="button"
                         rel="nofollow"
                       >
                         Add to compare
@@ -292,7 +286,7 @@ class PostDetail extends Component {
                     )}
                     <div className="clearfix" />
                   </form>
-                  <Button color="primary" href={product.buyUrl}> 
+                  <Button color="primary" href={product.buyUrl}>
                     Buy Now
                   </Button>
                   <div className="product-summary-actions">
@@ -302,11 +296,13 @@ class PostDetail extends Component {
                           onClick={() =>
                             this.AddToWishList(
                               product.id,
-                              product.name,
-                              product.pictures[0],
-                              qty,
-                              product.salePrice,
-                              "In Stock"
+                                product.mainBrand,
+                                product.name,
+                                product.pictures[0],
+                                1,
+                                product.salePrice,
+                                "In Stock",
+                                product
                             )
                           }
                         >
@@ -479,4 +475,18 @@ class PostDetail extends Component {
     );
   }
 }
-export default PostDetail;
+
+const mapStateToProps = (state) => {
+  return {
+    count: state.ui.productReducersUi.count,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCompareItems: () => {
+      dispatch(addToCompareItems());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);

@@ -120,6 +120,10 @@ class ProductList extends Component {
     return wishlist;
   }
 
+  handleToast = () => {
+    toast.warning("Please login to add item in wishlist");
+  };
+
   render() {
     const { product } = this.props;
     let rat = [];
@@ -204,7 +208,7 @@ class ProductList extends Component {
                                 "In Stock",
                                 product
                               )
-                            : this.props.history.push("/");
+                            : this.handleToast();
                         }}
                         className="add_to_wishlist"
                         data-toggle="tooltip"
@@ -272,7 +276,6 @@ class ProductList extends Component {
                     </ins>
                   </span>
                 ) : null}
-                <div className="product-rating">{rat}</div>
               </div>
               <div className="product-actions product-actions-list">
                 <div className="product-actions-inner">
@@ -311,16 +314,18 @@ class ProductList extends Component {
                     {!this.CheckWishList(product.id) ? (
                       <Link
                         to="#"
-                        onClick={() =>
-                          this.AddToWishList(
-                            product.id,
-                            product.name,
-                            product.pictures[0],
-                            1,
-                            product.salePrice,
-                            "In Stock"
-                          )
-                        }
+                        onClick={() => {
+                          this.props.loggedIn
+                            ? this.AddToWishList(
+                                product.id,
+                                product.name,
+                                product.pictures[0],
+                                1,
+                                product.salePrice,
+                                "In Stock"
+                              )
+                            : this.handleToast();
+                        }}
                         className="add_to_wishlist"
                         data-toggle="tooltip"
                         data-original-title="Wishlist"

@@ -133,6 +133,10 @@ function ProductSlider(props) {
     return rat;
   }
 
+  const handleToast = () =>{
+    toast.warning("Please login to add item in wishlist");
+  }
+
   return (
     <Col sm={12}>
       <ToastContainer autoClose={1000} />
@@ -225,7 +229,7 @@ function ProductSlider(props) {
                                           product.salePrice,
                                           "In Stock"
                                         )
-                                      : props.history.push("/");
+                                      : handleToast()
                                   }}
                                   className="add_to_wishlist"
                                   data-toggle="tooltip"
@@ -270,9 +274,7 @@ function ProductSlider(props) {
                               </span>
                             </ins>
                           </span>
-                          <div className="product-rating">
-                            {rating(product.rating)}
-                          </div>
+                         
                         </div>
                         <div className="product-details__short-description">
                           <p></p>

@@ -54,22 +54,22 @@ export const getFilterProductsdata = (
 
   return data
     .filter((product) => {
-      let brandMatchValue;
+      let brandMatchValue;        //brands name
       if (product.mainBrand)
         brandMatchValue = brand.includes(product.mainBrand);
-      else brandMatchValue = true;
+      else brandMatchValue = false;
 
-      let categoryMatchValue;
+      let categoryMatchValue;      //category 
       if (product.tags)
         categoryMatchValue = product.tags.some((tag) => category.includes(tag));
-      else categoryMatchValue = true;
+      else categoryMatchValue = false;
 
-      let sizeMatchValue;
-      if (product.size)
+      let sizeMatchValue;       //size
+      if (product.size)             
         sizeMatchValue = product.size.some((size) => sizes.includes(size));
       else sizeMatchValue = true;
 
-      let colorMatchValue;
+      let colorMatchValue;        //color
       if (color && product.colors) {
         colorMatchValue = product.colors.some((colors) =>
           color.includes(colors)
@@ -78,7 +78,7 @@ export const getFilterProductsdata = (
         colorMatchValue = false;
       }
 
-      let searchMatchValue;
+      let searchMatchValue;       //search
       if (product.name) {
         if (search == search.toLowerCase()) {
           searchMatchValue =
@@ -90,45 +90,17 @@ export const getFilterProductsdata = (
       } else {
         searchMatchValue = false;
       }
-
-      let ratingMatchValue;
-      if (product.rating == ratings) {
-        ratingMatchValue = true;
-      } else if (ratings == "") {
-        ratingMatchValue = true;
-      } else {
-        ratingMatchValue = false;
-      }
-
-      const startPriceMatchValue =
+                                 //price 
+      const startPriceMatchValue =               
         typeof value.min !== "number" || value.min <= product.salePrice;
       const endPriceMatchValue =
         typeof value.max !== "number" || product.salePrice <= value.max;
 
-      // let filtercheck=JSON.parse(localStorage.state).filters;
 
       if (
         category.length > 0 &&
         color.length > 0 &&
         size.length > 0 &&
-        ratings.length > 0 &&
-        brand.length > 0
-      ) {
-        return (
-          categoryMatchValue &&
-          colorMatchValue &&
-          sizeMatchValue &&
-          ratingMatchValue &&
-          startPriceMatchValue &&
-          endPriceMatchValue &&
-          searchMatchValue &&
-          brandMatchValue
-        );
-      }
-      if (
-        category.length > 0 &&
-        color.length > 0 &&
-        size.length > 0 &&
         brand.length > 0
       ) {
         return (
@@ -144,29 +116,25 @@ export const getFilterProductsdata = (
       if (
         category.length > 0 &&
         size.length > 0 &&
-        ratings.length > 0 &&
         brand.length > 0
       ) {
         return (
           categoryMatchValue &&
-          colorMatchValue &&
-          ratingMatchValue &&
           startPriceMatchValue &&
           endPriceMatchValue &&
           searchMatchValue &&
+          sizeMatchValue &&
           brandMatchValue
         );
       }
       if (
         category.length > 0 &&
         color.length > 0 &&
-        ratings.length > 0 &&
         brand.length > 0
       ) {
         return (
           categoryMatchValue &&
           colorMatchValue &&
-          ratingMatchValue &&
           startPriceMatchValue &&
           endPriceMatchValue &&
           searchMatchValue &&
@@ -176,13 +144,11 @@ export const getFilterProductsdata = (
       if (
         color.length > 0 &&
         size.length > 0 &&
-        ratings.length > 0 &&
         brand.length > 0
       ) {
         return (
           colorMatchValue &&
           sizeMatchValue &&
-          ratingMatchValue &&
           startPriceMatchValue &&
           endPriceMatchValue &&
           searchMatchValue &&
@@ -193,13 +159,11 @@ export const getFilterProductsdata = (
       if (
         color.length > 0 &&
         size.length > 0 &&
-        ratings.length > 0 &&
         category.length > 0
       ) {
         return (
           colorMatchValue &&
           sizeMatchValue &&
-          ratingMatchValue &&
           startPriceMatchValue &&
           endPriceMatchValue &&
           searchMatchValue &&
@@ -207,75 +171,66 @@ export const getFilterProductsdata = (
         );
       }
 
-      if (category.length > 0 && color.length > 0 && brand.length > 0) {
+      if (category.length > 0 && brand.length > 0) {
         return (
           categoryMatchValue &&
-          colorMatchValue &&
           startPriceMatchValue &&
           endPriceMatchValue &&
           searchMatchValue &&
           brandMatchValue
-        );
-      }
-      if (category.length > 0 && size.length > 0 && brand.length > 0) {
-        return (
-          categoryMatchValue &&
-          sizeMatchValue &&
-          startPriceMatchValue &&
-          endPriceMatchValue &&
-          searchMatchValue &&
-          brandMatchValue
-        );
-      }
-      if (category.length > 0 && ratings.length > 0 && brand.length > 0) {
-        return (
-          categoryMatchValue &&
-          ratingMatchValue &&
-          startPriceMatchValue &&
-          endPriceMatchValue &&
-          searchMatchValue &&
-          brandMatchValue
-        );
-      }
-      if (color.length > 0 && size.length > 0 && brand.length > 0) {
-        return (
-          colorMatchValue &&
-          sizeMatchValue &&
-          startPriceMatchValue &&
-          endPriceMatchValue &&
-          searchMatchValue &&
-          brandMatchValue
-        );
-      }
-      if (color.length > 0 && size.length > 0 && category.length > 0) {
-        return (
-          colorMatchValue &&
-          sizeMatchValue &&
-          startPriceMatchValue &&
-          endPriceMatchValue &&
-          searchMatchValue &&
-          categoryMatchValue
         );
       }
 
-      if (color.length > 0 && ratings.length > 0) {
+      if (color.length > 0 && category.length > 0) {
         return (
+          categoryMatchValue &&
           colorMatchValue &&
-          ratingMatchValue &&
           startPriceMatchValue &&
           endPriceMatchValue &&
           searchMatchValue
         );
       }
-      if (size.length > 0 && ratings.length > 0) {
+
+      if (size.length > 0 && brand.length > 0) {
         return (
           sizeMatchValue &&
-          ratingMatchValue &&
+          brandMatchValue &&
           startPriceMatchValue &&
           endPriceMatchValue &&
           searchMatchValue
         );
       }
+
+      if (color.length > 0 && brand.length > 0) {
+        return (
+          brandMatchValue &&
+          colorMatchValue &&
+          startPriceMatchValue &&
+          endPriceMatchValue &&
+          searchMatchValue
+        );
+      }
+
+      if (color.length > 0 && size.length > 0) {
+        return (
+          sizeMatchValue &&
+          colorMatchValue &&
+          startPriceMatchValue &&
+          endPriceMatchValue &&
+          searchMatchValue
+        );
+      }
+
+      if (category.length > 0 && size.length > 0) {
+        return (
+          categoryMatchValue &&
+          sizeMatchValue &&
+          startPriceMatchValue &&
+          endPriceMatchValue &&
+          searchMatchValue
+        );
+      }
+
       if (color.length > 0) {
         return (
           colorMatchValue &&
@@ -310,7 +265,6 @@ export const getFilterProductsdata = (
       }
       if (ratings.length > 0) {
         return (
-          ratingMatchValue &&
           startPriceMatchValue &&
           endPriceMatchValue &&
           searchMatchValue

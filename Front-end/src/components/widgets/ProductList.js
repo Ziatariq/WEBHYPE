@@ -243,7 +243,7 @@ class ProductList extends Component {
                   ))}
                 </span>
               ) : null}
-              {/* <span>{product.mainBrand}</span> */}
+              <span>{product.mainBrand}</span>
 
               {product.colors ? (
                 <span className="webhype-product-category">

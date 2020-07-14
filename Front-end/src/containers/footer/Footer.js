@@ -85,34 +85,6 @@ class Footer extends React.Component {
                           </ul>
                         </div>
                       </div>
-                      <div className="widget pgs-newsletter-widget">
-                        <h4 className="footer-title title">Newsletter</h4>
-                        <div className="newsletter">
-                          <div className="section-field">
-                            <form className="newsletter_form">
-                              <div className="input-area">
-                                <input
-                                  type="text"
-                                  className="placeholder newsletter-email"
-                                  name="newsletter_email"
-                                  placeholder="Enter your email"
-                                />
-                              </div>
-                              <div className="button-area">
-                                <span className="input-group-btn">
-                                  <button
-                                    className="btn btn-icon newsletter-mailchimp submit"
-                                    type="button"
-                                  >
-                                    Subscribe
-                                  </button>
-                                </span>
-                                <span className="newsletter-spinner spinimg-pgs_newsletter_widget_2" />
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </Row>
                 </Container>

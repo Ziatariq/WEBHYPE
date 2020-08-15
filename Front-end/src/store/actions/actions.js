@@ -110,7 +110,7 @@ export const getSelectedProductList = () => {
     let urls =
       selectedProducts &&
       selectedProducts.map((obj) => {
-        return `http://localhost:5001/api/v1/products/brands?mainBrand=${obj.MainBrand}`;
+        return `http://localhost:5001/api/v1/products/brands?mainBrand=${obj.MainBrand}&gender=${obj.ProductData.gender}`;
       });
 
     if (selectedProducts === null || selectedProducts.length === 0) {

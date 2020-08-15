@@ -1,30 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Col, Form, Row, Button } from "reactstrap";
-import {
-  ratingValue,
-  sortValue,
-  searchValue,
-} from "../../../store/actions/filter";
 import { getBrandProductList } from "../../../store/actions/actions";
 import { products } from "../../utilities/constants";
 import { getFilterProductsdata, uniqueBrand } from "../../../services";
 
 class TopFilter extends Component {
   state = {
-    SearchValue: "",
     brandOne: "",
     brandTwo: "",
     brandThree: "",
   };
-
-  componentDidMount() {
-    this.setState({
-      ...this.state,
-      SearchValue: "",
-    });
-    this.props.searchValue("");
-  }
 
   onChangeHandler = (event) => {
     this.setState({
@@ -35,8 +21,8 @@ class TopFilter extends Component {
   handleCompare = () => {
     const { brandOne, brandTwo, brandThree } = this.state;
     this.props.getBrandProductList(brandOne, brandTwo, brandThree);
-    if(this.props.section === "home") {
-      this.props.history.push("/compare-brands")
+    if (this.props.section === "home") {
+      this.props.history.push("/compare-brands");
     }
   };
 
@@ -121,15 +107,11 @@ class TopFilter extends Component {
   }
 }
 
-const mapDispatchToProps = (state) => ({
+const mapStateToProps = (state) => ({
   products: getFilterProductsdata(state.data.products, state.filters),
   brands: uniqueBrand(state.data.products),
   filters: state.filters,
 });
 
-export default connect(mapDispatchToProps, {
-  sortValue,
-  ratingValue,
-  searchValue,
-  getBrandProductList,
-})(TopFilter);
+
+export default connect(mapStateToProps, {getBrandProductList})(TopFilter);

@@ -22,11 +22,9 @@ const Login = (props) => {
     const { name, value } = e.target;
     switch (name) {
       case "user_name":
-        console.log("username:");
         errorsObj.user_name = "";
         break;
       case "password":
-        console.log("password");
         errorsObj.password = "";
         break;
       default:

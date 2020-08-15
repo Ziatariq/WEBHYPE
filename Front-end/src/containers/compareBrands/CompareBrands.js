@@ -15,7 +15,6 @@ class CompareBrands extends Component {
     super(props, context);
     this.state = {
       limit: 8,
-      hasMoreProduct: true,
     };
   }
 
@@ -29,15 +28,8 @@ class CompareBrands extends Component {
     window.location.reload(false);
   };
 
-  getBrandsData = (brandOne, brandTwo, brandThree) => {
-    axios.get(
-      `http://localhost:5001/api/v1/products/brands?mainBrand=${brandOne}`
-    );
-  };
-
   render() {
     let {
-      // products,
       brand1Products,
       brand2Products,
       brand3Products,
@@ -159,21 +151,24 @@ class CompareBrands extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  productFetched: state.ui.productReducersUi.productFetched,
-  brand1Products: getFilterProductsdata(
-    state.data.brand1_products,
-    state.filters
-  ),
-  brand2Products: getFilterProductsdata(
-    state.data.brand2_products,
-    state.filters
-  ),
-  brand3Products: getFilterProductsdata(
-    state.data.brand3_products,
-    state.filters
-  ),
-});
+const mapStateToProps = (state) => {
+  console.log("state.filters: ", state.filters);
+  return {
+    productFetched: state.ui.productReducersUi.productFetched,
+    brand1Products: getFilterProductsdata(
+      state.data.brand1_products,
+      state.filters
+    ),
+    brand2Products: getFilterProductsdata(
+      state.data.brand2_products,
+      state.filters
+    ),
+    brand3Products: getFilterProductsdata(
+      state.data.brand3_products,
+      state.filters
+    ),
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {};

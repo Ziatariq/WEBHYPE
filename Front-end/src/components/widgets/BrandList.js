@@ -92,7 +92,6 @@ class BrandList extends Component {
         }
       }
     }
-    console.log("check card items for add/view", checkcart);
     return checkcart;
   }
 
@@ -128,7 +127,6 @@ class BrandList extends Component {
       i += 1;
     }
 
-    console.log("brand list");
     return (
       <div key={key}>
         <ToastContainer autoClose={1000} draggable={false} />
@@ -230,6 +228,11 @@ class BrandList extends Component {
                       {index === product.tags.length - 1 ? "" : ", "}
                     </span>
                   ))}
+                </span>
+              ) : null}
+              {product.gender ? (
+                <span className="webhype-product-category">
+                  {product.gender}
                 </span>
               ) : null}
               {product.name ? (

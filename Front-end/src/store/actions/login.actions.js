@@ -39,7 +39,6 @@ export const loginUser = (creds) => (dispatch) => {
   return Axios.post(`${apiUrl}/app/login`, creds)
     .then((response) => {
       if (response.status === 204) {
-        console.log("response: ", response.status);
         dispatch(loginError("invalid user/pass"));
       } else {
         localStorage.setItem("user", JSON.stringify(response.data));
@@ -65,7 +64,6 @@ export const register = (user) => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  console.log("logout")
   localStorage.removeItem("user");
   try {
     dispatch({

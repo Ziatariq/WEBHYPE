@@ -18,7 +18,6 @@ import Profile from "./Profile";
 import WhishListItems from "../components/wishList/WhishListItems";
 
 const history = createBrowserHistory();
-
 class App extends React.Component {
   componentWillMount() {
     this.props.receiveProducts();

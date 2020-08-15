@@ -11,6 +11,7 @@ export default (
     value: { min: 0, max: 15000 },
     search: "",
     sortOrder: "",
+    gender: [],
   },
   action
 ) => {
@@ -53,6 +54,11 @@ export default (
     return {
       ...state,
       brand: action.brand,
+    };
+  } else if (action.type == "GET_GENDERS") {
+    return {
+      ...state,
+      gender: action.gender,
     };
   } else {
     return state;

@@ -1,6 +1,3 @@
-/**
- * Shop Page Side Bar Filter
- */
 import { Slider } from "antd";
 import "antd/dist/antd.css";
 import React, { Component } from "react";
@@ -11,6 +8,7 @@ import {
   priceValue,
   sizeValue,
   brandValue,
+  genderValue
 } from "../../../store/actions/filter";
 import {
   uniqueCategory,
@@ -24,10 +22,10 @@ import { Scrollbars } from "react-custom-scrollbars";
 class SideFilter extends Component {
   constructor(props) {
     super(props);
-    console.log("props =>", props);
     this.state = {
       priceplace: [this.props.prices.min, this.props.prices.max],
       setfistprice: [this.props.prices.min, this.props.prices.max],
+      gender: ["Man", "Women"],
       sidebarmenu: false,
       gender: "",
     };
@@ -80,9 +78,16 @@ class SideFilter extends Component {
     this.props.sizeValue(sizes);
   }
 
-  onClickGender = (value) => {
-    this.setState({ gender: value });
-  };
+  onClickGenderFilter(event, gender) {
+    var index = gender.indexOf(event.target.value);
+    if (event.target.checked) {
+      gender.push(event.target.value);
+    } else {
+      gender.splice(index, 1);
+    }
+    this.props.genderValue(gender);
+  }
+
   onChangePricePlace = (values) => {
     var maximumval = this.props.prices.max / 5;
 
@@ -203,6 +208,7 @@ class SideFilter extends Component {
     const categoryFilterValues = this.props.filters.category;
     const colorsFilterValues = this.props.filters.color;
     const brandsFilterValues = this.props.filters.brand;
+    const gendersFilterValues = this.props.filters.gender;
 
     return (
       <div>
@@ -419,6 +425,51 @@ class SideFilter extends Component {
             </Scrollbars>
           </div>
         </div>
+
+
+        <div className="widget widget_layered_nav widget-layered-nav pgs_widget-layered-nav">
+          <div className="d-flex align-items-center justify-content-between">
+            <h4 className="widget-title">Filter by Gender</h4>
+            <p>
+              <a
+                className="price-clear-filter"
+                onClick={() => this.clearGender()}
+              >
+                Clear
+              </a>
+            </p>
+          </div>
+          <div
+            className="pgs-widget-layered-nav-list-container has-scrollbar"
+            style={{ height: "215px" }}
+          >
+            <Scrollbars>
+              {this.props.genders.map((gender, index) => {
+                return (
+                  <div className="form-check pgs-filter-checkbox" key={index}>
+                    <input
+                      type="checkbox"
+                      onClick={(e) =>
+                        this.onClickGenderFilter(e, gendersFilterValues)
+                      }
+                      value={gender}
+                      defaultChecked={
+                        gendersFilterValues.includes(gender) ? true : false
+                      }
+                      className="form-check-input"
+                      id={gender}
+                    />
+                    <label className="form-check-label" htmlFor={gender}>
+                      {gender}
+                    </label>
+                  </div>
+                );
+              })}
+            </Scrollbars>
+          </div>
+        </div>
+
+        
       </div>
     );
   }
@@ -434,6 +485,7 @@ const mapStateToProps = (state, ownProps) => {
     colors: uniqueColors(product),
     prices: uniqueMinMaxPrice(product),
     brands: uniqueBrand(product),
+    genders: ["men", "women"],
     filters: state.filters,
   };
 };
@@ -443,4 +495,5 @@ export default connect(mapStateToProps, {
   colorValue,
   priceValue,
   brandValue,
+  genderValue
 })(SideFilter);
